@@ -1,0 +1,38 @@
+import React, { useState } from 'react'
+import Taro from '@tarojs/taro'
+import { View } from '@tarojs/components'
+import { AtForm, AtInput, AtButton, AtTextarea, AtRadio } from 'taro-ui'
+import { useStore } from '@/store'
+import { $api } from '@/api'
+
+const Authorize = () => {
+  const { GlobalStore } = useStore()
+
+  const handleAuthorize = async () => {
+    const user = await Taro.getUserProfile({
+      desc: '登陆'
+    })
+    const { avatarUrl, nickName } = user.userInfo
+    const loginRes = await Taro.login()
+
+    if (loginRes.code) {
+      //发起网络请求
+      const wxLogin = await $api.AuthApi.login({
+        code: loginRes.code,
+        avatarUrl,
+        nickName
+      })
+      GlobalStore.setUserInfo(wxLogin.data.data.user)
+    }
+  }
+
+  return (
+    <View style={{ marginTop: '40%' }}>
+      <AtButton type="primary" onClick={handleAuthorize}>
+        点我授权
+      </AtButton>
+    </View>
+  )
+}
+
+export default Authorize

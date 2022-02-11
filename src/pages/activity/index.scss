@@ -1,0 +1,63 @@
+.activity-wrapper {
+  .pane {
+    padding: 5px;
+    background-color: #fafbfc;
+    text-align: center;
+  }
+}
+.activity-participated-list-wrapper,
+.activity-can-list-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 246px - env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  .list {
+    flex: 1;
+    overflow-y: auto;
+    .content {
+      margin-bottom: 20px;
+    }
+  }
+  .pagination {
+    margin-top: 30px;
+  }
+}
+
+.activity-game-content {
+  text-align: start;
+}
+
+.activity-form-wrapper {
+  .form-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 40px;
+    .form-left {
+      min-width: 160px;
+    }
+    .form-right {
+      flex: 1;
+      margin-left: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      .btn {
+        margin: 0;
+      }
+    }
+    .game {
+      color: #000;
+      .text {
+        color: rgb(190, 190, 190);
+      }
+    }
+  }
+  .picker {
+    flex: 1;
+    color: rgb(190, 190, 190);
+    .text {
+      color: #000;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+.game-wrapper {
+  height: calc(100vh - 10px - env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  .tabs {
+    height: auto;
+  }
+  .list {
+    flex: 1;
+  }
+  .btn {
+    width: 100%;
+    margin-top: 10px;
+  }
+  .pagination {
+    margin-bottom: 10px;
+  }
+}
+
+.game-form-wrapper {
+  padding: 0 20px;
+  .at-radio__option {
+    padding-left: 0;
+  }
+  .form-item {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 40px;
+    .form-left {
+      min-width: 160px;
+    }
+    .form-right {
+      flex: 1;
+      margin-left: 0;
+    }
+  }
+}
+
+.game-choose-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  .list {
+    width: 100%;
+    max-height: 700px;
+    overflow-y: auto;
+  }
+}
