@@ -13,6 +13,9 @@ const User = () => {
       case 'activity':
         navigateTo('/pages/activity/form')
         break
+      case 'activityList':
+        navigateTo('/pages/activity/list')
+        break
       case 'game':
         navigateTo('/pages/game/index')
         break
@@ -37,6 +40,11 @@ const User = () => {
           title="创建活动"
           arrow="right"
           onClick={() => handleClick('activity')}
+        />
+        <AtListItem
+          title="我发起的活动"
+          arrow="right"
+          onClick={() => handleClick('activityList')}
         />
         <AtListItem
           title="点击授权"

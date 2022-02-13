@@ -4,6 +4,7 @@ export default {
     'pages/game/index',
     'pages/game/form',
     'pages/activity/form',
+    'pages/activity/list',
     'pages/authorize'
   ],
   window: {

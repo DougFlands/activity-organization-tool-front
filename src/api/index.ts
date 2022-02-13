@@ -30,6 +30,7 @@ const interceptor = function(chain) {
   })
 }
 addInterceptor(interceptor)
+
 function checkResponse(response: IApiData) {
   const { code, msg, data } = response
 
@@ -37,20 +38,20 @@ function checkResponse(response: IApiData) {
     console.log(msg)
     showToast({
       title: msg || '网络异常',
-      icon: 'none'
+      icon: 'none',
+      duration: 1500
     })
-    Promise.reject({ code, msg })
+    return Promise.reject({ code, msg })
   }
   return Promise.resolve(data)
 }
+
 function request(url: string, options: TOptions) {
   return _request<IApiData>({
     url: baseApi + url,
     ...options
   })
-    .then(async res => {
-      return await checkResponse(res.data)
-    })
+    .then(async res => await checkResponse(res.data))
     .catch(error => {
       const errMsg = error.msg || error.errMsg || '异常'
       showToast({

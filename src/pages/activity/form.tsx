@@ -19,16 +19,16 @@ const Form = () => {
   const [formData, setFormData] = useState({
     gameId: '',
     gameName: '',
-    location: '',
-    price: '',
+    location: '1',
+    price: '1',
     date: '',
     time: '',
     dateTime: ''
   })
   const [showModal, setShowModal] = useState(false)
-  const [show, hide] = useToast({
+  const [show] = useToast({
     mask: true,
-    duration: 2000,
+    duration: 1500,
     icon: 'none'
   })
 
@@ -76,20 +76,19 @@ const Form = () => {
     }
     formData.dateTime = `${formData.date} ${formData.time}:00`
     let res
-    if (routerInfo.params.id) {
-      res = await $api.ActivityApi.update(formData)
-    } else {
-      res = await $api.ActivityApi.create(formData)
+    try {
+      if (routerInfo.params.id) {
+        res = await $api.ActivityApi.update(formData)
+      } else {
+        res = await $api.ActivityApi.create(formData)
+      }
+    } catch (error) {
+      console.log(error)
+      return
     }
-    console.log(res)
-    show({
-      title: '创建成功',
-      duration: 2000
-    })
     await navigateBack()
     show({
-      title: '创建成功',
-      duration: 2000
+      title: '创建成功'
     })
   }
 

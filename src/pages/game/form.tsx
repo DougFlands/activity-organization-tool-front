@@ -23,7 +23,7 @@ const Menu = () => {
   })
   const [showToast] = useToast({
     mask: true,
-    duration: 1000,
+    duration: 1500,
     icon: 'none'
   })
 
@@ -37,29 +37,30 @@ const Menu = () => {
   const handleSubmit = async () => {
     if (!formData.name) {
       showToast({
-        title: '请输入名称',
-        duration: 2000
+        title: '请输入名称'
       })
       return
     }
     if (!formData.peopleNum) {
       showToast({
-        title: '请输入人数',
-        duration: 2000
+        title: '请输入人数'
       })
       return
     }
     let res
-    if (routerInfo.params.id) {
-      res = await $api.GameApi.update(formData)
-    } else {
-      res = await $api.GameApi.create(formData)
+    try {
+      if (routerInfo.params.id) {
+        res = await $api.GameApi.update(formData)
+      } else {
+        res = await $api.GameApi.create(formData)
+      }
+    } catch (error) {
+      console.log(error)
+      return
     }
-    console.log(res)
     await navigateBack()
     showToast({
-      title: '创建成功',
-      duration: 2000
+      title: '创建成功'
     })
   }
 

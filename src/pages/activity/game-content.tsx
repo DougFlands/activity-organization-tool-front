@@ -1,6 +1,9 @@
 import React, { useState } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtCard, AtButton } from 'taro-ui'
+import { $api } from '@/api'
+import { useToast, useModal } from 'taro-hooks'
+
 import './index.scss'
 
 type GameContentProps = {
@@ -8,23 +11,105 @@ type GameContentProps = {
 }
 
 const GameContent = props => {
-  const handleClick = () => {}
-  const tabList = [{ title: '全部' }, { title: '已参加' }]
-  const [current, setCurrent] = useState(1)
+  const [show] = useToast({
+    mask: true,
+    duration: 1500,
+    icon: 'none'
+  })
+  const [showModal] = useModal({
+    title: '确认操作',
+    content: '确定要删除吗?'
+  })
+
+  const handleInvolvedActivity = async () => {
+    try {
+      const res = await $api.ActivityApi.involvedOrExitActivities({
+        userId: props.data.userId,
+        activityId: props.data.id,
+        status: 1
+      })
+    } catch (error) {
+      console.log(error)
+      return
+    }
+
+    show({
+      title: '参与成功'
+    })
+  }
+
+  const handleExisActivity = async () => {
+    try {
+      const res = await $api.ActivityApi.involvedOrExitActivities({
+        userId: props.data.userId,
+        activityId: props.data.id,
+        status: 0
+      })
+    } catch (error) {
+      console.log(error)
+      return
+    }
+
+    show({
+      title: '退出成功'
+    })
+  }
+
+  const handleDelActivity = async () => {
+    const result = await showModal({
+      confirmText: '删除'
+    })
+    if (result.confirm) {
+      try {
+        const res = await $api.ActivityApi.del({
+          id: props.data.id
+        })
+      } catch (error) {
+        console.log(error)
+        return
+      }
+
+      show({
+        title: '删除成功'
+      })
+      props.handleReset()
+    }
+  }
 
   return (
-    <AtCard extra="豪门5" title="剧本:" className="activity-game-content">
+    <AtCard extra="豪门5" title="剧本:123" className="activity-game-content">
       <View>发起人: 猩猩</View>
-      <View>地点: 科学馆 92咖啡</View>
-      <View>费用: ￥30</View>
-      <View>开始时间: 2022-01-01 16:00</View>
-      <View>人数: 2/6</View>
-      {true ? (
-        <AtButton type="primary" size="small" className="btn">
+      <View>地点: {props.data.location}</View>
+      <View>费用: ￥{props.data.price}</View>
+      <View>开始时间: {props.data.dateTime}</View>
+      <View>
+        人数: {props.data.participants}/{props.data.participants}
+      </View>
+      {props.data.edit ? (
+        <AtButton
+          type="primary"
+          size="small"
+          className="btn btn-del"
+          onClick={handleDelActivity}
+        >
+          删除
+        </AtButton>
+      ) : props.data.showInvolved ? (
+        <AtButton
+          type="primary"
+          size="small"
+          className="btn btn-involved"
+          onClick={handleInvolvedActivity}
+        >
           参加
         </AtButton>
       ) : (
-        <AtButton type="secondary" size="small" className="btn">
+        <AtButton
+          type="primary"
+          size="small"
+          className="btn btn-exit"
+          onClick={handleExisActivity}
+        >
           退出
         </AtButton>
       )}

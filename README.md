@@ -28,5 +28,8 @@ time string
 userId
 token
 
+# 参加活动
+userid
+actid
+status  参加状态 0退出 1参加
 
-https://blog.jijian.link/2020-07-23/webpack-alter-file/

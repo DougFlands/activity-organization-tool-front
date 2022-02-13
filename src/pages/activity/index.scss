@@ -5,7 +5,8 @@
     text-align: center;
   }
 }
-.activity-participated-list-wrapper,
+.activity-involved-list-wrapper,
+.activity-list-wrapper,
 .activity-can-list-wrapper {
   display: flex;
   flex-direction: column;
@@ -23,8 +24,17 @@
   }
 }
 
+.activity-list-wrapper {
+  height: calc(100vh - env(safe-area-inset-bottom));
+}
+
 .activity-game-content {
   text-align: start;
+  .btn-del,
+  .btn-exit {
+    border: 1px solid #ff4949;
+    background: #ff4949;
+  }
 }
 
 .activity-form-wrapper {

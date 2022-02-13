@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { View } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
-import CanList from './can-list'
-import ParticipatedList from './participated-list'
+import CanParticipateList from './can-participate-list'
+import InvolvedList from './involved-list'
 
 import './index.scss'
 
@@ -20,12 +20,12 @@ const Activity = () => {
       <AtTabs current={activityType} tabList={tabList} onClick={handleClick}>
         <AtTabsPane current={activityType} index={0}>
           <View className="pane">
-            <CanList activityType={activityType} />
+            <CanParticipateList activityType={activityType} />
           </View>
         </AtTabsPane>
         <AtTabsPane current={activityType} index={1}>
           <View className="pane">
-            <ParticipatedList activityType={activityType} />
+            <InvolvedList activityType={activityType} />
           </View>
         </AtTabsPane>
       </AtTabs>

@@ -5,5 +5,7 @@ export default {
   find: params => httpService.get('/busAct/findBusActivity', params),
   findList: params => httpService.get('/busAct/getBusActivityList', params),
   del: params => httpService.post('/busAct/deleteBusActivity', params),
-  update: params => httpService.post('/busAct/updateBusActivity', params)
+  update: params => httpService.post('/busAct/updateBusActivity', params),
+  involvedOrExitActivities: params =>
+    httpService.post('/busAct/involvedOrExitActivities', params)
 }
