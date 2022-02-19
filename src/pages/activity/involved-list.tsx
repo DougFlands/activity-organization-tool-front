@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { View } from '@tarojs/components'
 import { AtTabs, AtTabsPane, AtPagination } from 'taro-ui'
 import { $api } from '@/api'
+import { useStore } from '@/store'
 import GameContent from './game-content'
 
 import './index.scss'
@@ -15,15 +16,17 @@ const InvolvedList = (props: ListProps) => {
   const [gameList, setGameList] = useState([{}])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
+  const { GlobalStore } = useStore()
 
   const handlePageChange = data => {
     setPage(data.current)
   }
 
   const fetch = async () => {
-    const res = await $api.ActivityApi.findList({
+    const res = await $api.ActivityApi.involvedActivityList({
       page,
-      pageSize: 20
+      pageSize: 20,
+      userId: GlobalStore.userInfo.id
     })
     setGameList(res.list)
     setTotal(res.total)

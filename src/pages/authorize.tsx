@@ -4,9 +4,16 @@ import { View } from '@tarojs/components'
 import { AtForm, AtInput, AtButton, AtTextarea, AtRadio } from 'taro-ui'
 import { useStore } from '@/store'
 import { $api } from '@/api'
+import { useToast, useRouter, useModal } from 'taro-hooks'
 
 const Authorize = () => {
   const { GlobalStore } = useStore()
+  const [routerInfo, { navigateBack }] = useRouter()
+  const [showToast] = useToast({
+    mask: true,
+    duration: 1500,
+    icon: 'none'
+  })
 
   const handleAuthorize = async () => {
     const user = await Taro.getUserProfile({
@@ -22,7 +29,12 @@ const Authorize = () => {
         avatarUrl,
         nickName
       })
-      GlobalStore.setUserInfo(wxLogin.data.data.user)
+      console.log(wxLogin)
+      await navigateBack()
+      showToast({
+        title: '授权成功'
+      })
+      GlobalStore.setUserInfo(wxLogin.user)
     }
   }
 
