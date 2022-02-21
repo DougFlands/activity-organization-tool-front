@@ -13,7 +13,7 @@ type ListProps = {
 
 // 已参加的活动
 const InvolvedList = (props: ListProps) => {
-  const [gameList, setGameList] = useState([{}])
+  const [gameList, setGameList] = useState([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const { GlobalStore } = useStore()
@@ -28,7 +28,13 @@ const InvolvedList = (props: ListProps) => {
       pageSize: 20,
       userId: GlobalStore.userInfo.id
     })
-    setGameList(res.list)
+    const list = res.list.map(item => {
+      return {
+        ...item,
+        ...item.busActivity
+      }
+    })
+    setGameList(list)
     setTotal(res.total)
   }
 

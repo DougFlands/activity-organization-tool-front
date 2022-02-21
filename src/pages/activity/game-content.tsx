@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { View, Text } from '@tarojs/components'
 import { AtCard, AtButton } from 'taro-ui'
 import { $api } from '@/api'
@@ -76,13 +76,18 @@ const GameContent = props => {
     }
   }
 
+  useEffect(() => {
+    console.log(props)
+  }, [props])
+
   return (
     <AtCard extra="豪门5" title="剧本:123" className="activity-game-content">
-      <View>发起人: 猩猩</View>
+      <View>发起人: {props.data.user.nickName}</View>
       <View>地点: {props.data.location}</View>
       <View>费用: ￥{props.data.price}</View>
       <View>开始时间: {props.data.dateTime}</View>
       <View>
+        {/* TODO:  */}
         人数: {props.data.participants}/{props.data.participants}
       </View>
       {props.data.edit ? (

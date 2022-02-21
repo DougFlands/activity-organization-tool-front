@@ -33,3 +33,7 @@ userid
 actid
 status  参加状态 0退出 1参加
 
+# TODO
+参与人数
+可参加列表
+登陆 && 拦截

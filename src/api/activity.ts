@@ -10,5 +10,5 @@ export default {
   involvedOrExitActivities: params =>
     httpService.post('/busAct/involvedOrExitActivities', params),
   involvedActivityList: params =>
-    httpService.post('/busAct/GetBusInvolvedActivityList', params)
+    httpService.get('/busAct/GetBusInvolvedActivityList', params)
 }
