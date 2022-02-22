@@ -88,7 +88,7 @@ const GameContent = props => {
       <View>开始时间: {props.data.dateTime}</View>
       <View>
         {/* TODO:  */}
-        人数: {props.data.participants}/{props.data.participants}
+        人数: {props.data.participants}/{props.data.busGame.peopleNum}
       </View>
       {props.data.edit ? (
         <AtButton
