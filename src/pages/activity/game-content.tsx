@@ -3,8 +3,7 @@ import { View, Text } from '@tarojs/components'
 import { AtCard, AtButton } from 'taro-ui'
 import { $api } from '@/api'
 import { useToast, useModal } from 'taro-hooks'
-
-import './index.scss'
+import style from './index.scss'
 
 type GameContentProps = {
   data: any
@@ -76,12 +75,11 @@ const GameContent = props => {
     }
   }
 
-  useEffect(() => {
-    console.log(props)
-  }, [props])
-
   return (
-    <AtCard extra="豪门5" title="剧本:123" className="activity-game-content">
+    <AtCard
+      title={`${props.data.busGame.type}: ${props.data.busGame.name}`}
+      className={style.activityGameContent}
+    >
       <View>发起人: {props.data.user.nickName}</View>
       <View>地点: {props.data.location}</View>
       <View>费用: ￥{props.data.price}</View>
@@ -94,7 +92,7 @@ const GameContent = props => {
         <AtButton
           type="primary"
           size="small"
-          className="btn btn-del"
+          className={`${style.btn} ${style.btnDel}`}
           onClick={handleDelActivity}
         >
           删除
@@ -103,7 +101,7 @@ const GameContent = props => {
         <AtButton
           type="primary"
           size="small"
-          className="btn btn-involved"
+          className={`${style.btn} ${style.btnInvolved}`}
           onClick={handleInvolvedActivity}
         >
           参加
@@ -112,7 +110,7 @@ const GameContent = props => {
         <AtButton
           type="primary"
           size="small"
-          className="btn btn-exit"
+          className={`${style.btn} ${style.btnExit}`}
           onClick={handleExisActivity}
         >
           退出

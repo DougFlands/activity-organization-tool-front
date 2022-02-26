@@ -3,8 +3,7 @@ import { View } from '@tarojs/components'
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import CanParticipateList from './can-participate-list'
 import InvolvedList from './involved-list'
-
-import './index.scss'
+import style from './index.scss'
 
 const Activity = () => {
   const [activityType, setActivityType] = useState(0)
@@ -16,15 +15,15 @@ const Activity = () => {
   const tabList = [{ title: '可参加' }, { title: '已参加' }]
 
   return (
-    <View className="activity-wrapper">
+    <View className={style.activityWrapper}>
       <AtTabs current={activityType} tabList={tabList} onClick={handleClick}>
         <AtTabsPane current={activityType} index={0}>
-          <View className="pane">
+          <View className={style.pane}>
             <CanParticipateList activityType={activityType} />
           </View>
         </AtTabsPane>
         <AtTabsPane current={activityType} index={1}>
-          <View className="pane">
+          <View className={style.pane}>
             <InvolvedList activityType={activityType} />
           </View>
         </AtTabsPane>

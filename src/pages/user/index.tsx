@@ -3,7 +3,8 @@ import { View } from '@tarojs/components'
 import { AtTabs, AtList, AtListItem, AtButton } from 'taro-ui'
 import { useRouter } from 'taro-hooks'
 import { useStore } from '@/store'
-import './index.scss'
+
+import style from './index.scss'
 
 const User = () => {
   const { GlobalStore } = useStore()
@@ -28,7 +29,7 @@ const User = () => {
   }
 
   return (
-    <View className="menu-wrapper">
+    <View>
       <View> 用户: {GlobalStore.userInfo.nickName}</View>
       <AtList>
         <AtListItem

@@ -5,7 +5,7 @@ import { useRouter } from 'taro-hooks'
 import { useDidShow, useDidHide } from '@tarojs/taro'
 import { $api } from '@/api'
 
-import './index.scss'
+import style from './index.scss'
 
 const Game = () => {
   const [gameType, setGameType] = useState(0)
@@ -61,14 +61,14 @@ const Game = () => {
   })
 
   return (
-    <View className="game-wrapper">
+    <View className={style.gameWrapper}>
       <AtTabs
         current={gameType}
         tabList={tabList}
         onClick={handleClick}
-        className="tabs"
+        className={style.tabs}
       ></AtTabs>
-      <AtList className="list">
+      <AtList className={style.list}>
         {list.map((item: any) => {
           return (
             <AtListItem
@@ -87,12 +87,12 @@ const Game = () => {
         pageSize={20}
         current={page}
         onPageChange={handlePageChange}
-        className="pagination"
+        className={style.pagination}
       />
       <AtButton
         type="primary"
         size="small"
-        className="btn"
+        className={style.btn}
         onClick={() => handlerCreateGame({ id: '' })}
       >
         新建游戏

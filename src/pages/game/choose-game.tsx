@@ -3,7 +3,7 @@ import { View } from '@tarojs/components'
 import { AtTabs, AtList, AtListItem, AtButton, AtPagination } from 'taro-ui'
 import { $api } from '@/api'
 
-import './index.scss'
+import style from './index.scss'
 
 interface IProps {
   handleChoose: (string) => void
@@ -40,14 +40,14 @@ const Game = props => {
   const tabList = [{ title: '剧本' }, { title: '桌游' }]
 
   return (
-    <View className="game-choose-wrapper">
+    <View className={style.gameChooseWrapper}>
       <AtTabs
         current={gameType}
         tabList={tabList}
         onClick={handleClick}
-        className="tabs"
+        className={style.tabs}
       ></AtTabs>
-      <AtList className="list">
+      <AtList className={style.list}>
         {list.map((item: any) => {
           return (
             <AtListItem
@@ -63,7 +63,7 @@ const Game = props => {
         pageSize={20}
         current={page}
         onPageChange={handlePageChange}
-        className="pagination"
+        className={style.pagination}
       />
     </View>
   )

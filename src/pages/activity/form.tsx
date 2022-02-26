@@ -11,7 +11,7 @@ import {
 import { useToast, useRouter, useModal } from 'taro-hooks'
 import { $api } from '@/api'
 import ChooseGame from '../game/choose-game'
-import './index.scss'
+import style from './index.scss'
 
 const Form = () => {
   const [routerInfo, { navigateBack }] = useRouter()
@@ -97,28 +97,28 @@ const Form = () => {
   }
 
   return (
-    <View className="activity-form-wrapper">
+    <View className={style.activityFormWrapper}>
       <AtForm>
-        <View className="form-item">
-          <View className="form-left">游戏:</View>
-          <View className="form-right game">
+        <View className={style.formItem}>
+          <View className={style.formLeft}>游戏:</View>
+          <View className={`${style.formRight} ${style.game}`}>
             <Text>
               {formData.gameId ? (
                 <Text>{formData.gameName}</Text>
               ) : (
-                <Text className="text">请选择游戏</Text>
+                <Text className={style.text}>请选择游戏</Text>
               )}
             </Text>
-            <AtButton onClick={handleClickChooseGame} className="btn">
+            <AtButton onClick={handleClickChooseGame} className={style.btn}>
               选择游戏
             </AtButton>
           </View>
         </View>
 
-        <View className="form-item">
-          <View className="form-left">游戏地点:</View>
+        <View className={style.formItem}>
+          <View className={style.formLeft}>游戏地点:</View>
           <AtInput
-            className="form-right"
+            className={style.formRight}
             name="location"
             type="text"
             placeholder="请输入..."
@@ -132,10 +132,10 @@ const Form = () => {
           />
         </View>
 
-        <View className="form-item">
-          <View className="form-left">费用:</View>
+        <View className={style.formItem}>
+          <View className={style.formLeft}>费用:</View>
           <AtInput
-            className="form-right"
+            className={style.formRight}
             name="price"
             type="number"
             placeholder="请输入..."
@@ -149,8 +149,8 @@ const Form = () => {
           />
         </View>
 
-        <View className="form-item">
-          <View className="form-left">日期:</View>
+        <View className={style.formItem}>
+          <View className={style.formLeft}>日期:</View>
           <Picker
             mode="date"
             onChange={({ detail: { value } }) => {
@@ -160,18 +160,18 @@ const Form = () => {
               })
             }}
             value={formData.date}
-            className="picker"
+            className={style.picker}
           >
             {formData.date ? (
-              <View className="text">{formData.date}</View>
+              <View className={style.text}>{formData.date}</View>
             ) : (
               <View>请选择日期</View>
             )}
           </Picker>
         </View>
 
-        <View className="form-item">
-          <View className="form-left">时间:</View>
+        <View className={style.formItem}>
+          <View className={style.formLeft}>时间:</View>
           <Picker
             mode="time"
             onChange={({ detail: { value } }) => {
@@ -181,10 +181,10 @@ const Form = () => {
               })
             }}
             value={formData.time}
-            className="picker"
+            className={style.picker}
           >
             {formData.time ? (
-              <View className="text">{formData.time}</View>
+              <View className={style.text}>{formData.time}</View>
             ) : (
               <View>请选择时间</View>
             )}

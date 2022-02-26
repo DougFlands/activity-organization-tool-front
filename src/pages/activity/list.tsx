@@ -4,8 +4,7 @@ import { AtTabs, AtTabsPane, AtPagination } from 'taro-ui'
 import { $api } from '@/api'
 import { useStore } from '@/store'
 import GameContent from './game-content'
-
-import './index.scss'
+import style from './index.scss'
 
 type ListProps = {
   activityType: number
@@ -45,11 +44,11 @@ const CanList = (props: ListProps) => {
   }, [page])
 
   return (
-    <View className="activity-list-wrapper">
-      <View className="list">
+    <View className={style.activityListWrapper}>
+      <View className={style.list}>
         {gameList.map((item, index) => {
           return (
-            <View key={index} className="content">
+            <View key={index} className={style.content}>
               <GameContent data={item} handleReset={handleReset} />
             </View>
           )
@@ -60,7 +59,7 @@ const CanList = (props: ListProps) => {
         pageSize={10}
         current={page}
         onPageChange={handlePageChange}
-        className="pagination"
+        className={style.pagination}
       />
     </View>
   )

@@ -1,13 +1,13 @@
-.activity-wrapper {
+.activityWrapper {
   .pane {
     padding: 5px;
     background-color: #fafbfc;
     text-align: center;
   }
 }
-.activity-involved-list-wrapper,
-.activity-list-wrapper,
-.activity-can-list-wrapper {
+.activityInvolvedListWrapper,
+.activityListWrapper,
+.activityCanListWrapper {
   display: flex;
   flex-direction: column;
   height: calc(100vh - 246px - env(safe-area-inset-bottom));
@@ -24,29 +24,29 @@
   }
 }
 
-.activity-list-wrapper {
+.activityListWrapper {
   height: calc(100vh - env(safe-area-inset-bottom));
 }
 
-.activity-game-content {
+.activityGameContent {
   text-align: start;
-  .btn-del,
-  .btn-exit {
+  .btnDel,
+  .btnExit {
     border: 1px solid #ff4949;
     background: #ff4949;
   }
 }
 
-.activity-form-wrapper {
-  .form-item {
+.activityFormWrapper {
+  .formItem {
     display: flex;
     align-items: center;
     width: 100%;
     margin-bottom: 40px;
-    .form-left {
+    .formLeft {
       min-width: 160px;
     }
-    .form-right {
+    .formRight {
       flex: 1;
       margin-left: 0;
       display: flex;

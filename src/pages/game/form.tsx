@@ -11,7 +11,7 @@ import {
 import Taro from '@tarojs/taro'
 import { useToast, useRouter, useModal } from 'taro-hooks'
 import { $api } from '@/api'
-import './index.scss'
+import style from './index.scss'
 
 const Menu = () => {
   const [formData, setFormData] = useState({
@@ -86,12 +86,12 @@ const Menu = () => {
   }, [])
 
   return (
-    <View className="game-form-wrapper">
+    <View className={style.gameFormWrapper}>
       <AtForm>
-        <View className="form-item">
-          <View className="form-left">游戏类型:</View>
+        <View className={style.formItem}>
+          <View className={style.formLeft}>游戏类型:</View>
           <AtRadio
-            className="form-right"
+            className={style.formRight}
             options={[
               { label: '剧本', value: 1 },
               { label: '桌游', value: 2 }
@@ -106,10 +106,10 @@ const Menu = () => {
           />
         </View>
 
-        <View className="form-item">
-          <View className="form-left">游戏名称:</View>
+        <View className={style.formItem}>
+          <View className={style.formLeft}>游戏名称:</View>
           <AtInput
-            className="form-right"
+            className={style.formRight}
             name="name"
             type="text"
             placeholder="请输入..."
@@ -123,10 +123,10 @@ const Menu = () => {
           />
         </View>
 
-        <View className="form-item">
-          <View className="form-left">简介:</View>
+        <View className={style.formItem}>
+          <View className={style.formLeft}>简介:</View>
           <AtTextarea
-            className="form-right"
+            className={style.formRight}
             placeholder="请输入..."
             value={formData.introduction}
             maxLength={200}
@@ -139,10 +139,10 @@ const Menu = () => {
           />
         </View>
 
-        <View className="form-item">
-          <View className="form-left">人数:</View>
+        <View className={style.formItem}>
+          <View className={style.formLeft}>人数:</View>
           <AtInput
-            className="form-right"
+            className={style.formRight}
             name="peopleNum"
             maxlength={2}
             type="number"

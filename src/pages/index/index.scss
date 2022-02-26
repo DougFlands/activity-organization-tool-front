@@ -1,11 +1,7 @@
-page {
-  background-color: white;
-  padding: 14px;
-  box-sizing: border-box;
-  color: #333;
-}
-
-.app-wrapper {
+.appWrapper {
   display: flex;
   flex-direction: column;
+  .tab {
+    display: flex;
+  }
 }
