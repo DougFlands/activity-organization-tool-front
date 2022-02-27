@@ -1,4 +1,9 @@
-import { request as _request, addInterceptor, showToast } from '@tarojs/taro'
+import {
+  request as _request,
+  addInterceptor,
+  showToast,
+  navigateTo
+} from '@tarojs/taro'
 import { GlobalStore } from '@/store'
 import AuthApi from './auth'
 import GameApi from './game'
@@ -8,8 +13,8 @@ export const baseApi = 'http://127.0.0.1:8888'
 
 enum ECode {
   OPERATION_SUCCESS = 0, // "操作成功"
-  UN_AUTHORIZED = 401, // 无权访问
-  UNAUTH_ERRO = 1 // "未登录"
+  UN_AUTHORIZED = 401, // 用户无权访问
+  UNAUTH_ERRO = 7 // "出错"
 }
 
 export interface IApiData {
@@ -33,6 +38,19 @@ addInterceptor(interceptor)
 
 function checkResponse(response: IApiData) {
   const { code, msg, data } = response
+
+  if (code === ECode.UN_AUTHORIZED) {
+    navigateTo({
+      url: '/pages/authorize'
+    })
+    showToast({
+      title: msg,
+      icon: 'none',
+      duration: 1500
+    })
+
+    return Promise.reject({ code, msg })
+  }
 
   if (code !== ECode.OPERATION_SUCCESS) {
     console.log(msg)

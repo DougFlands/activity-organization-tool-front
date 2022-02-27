@@ -3,6 +3,7 @@ import { View, Text } from '@tarojs/components'
 import { AtCard, AtButton } from 'taro-ui'
 import { $api } from '@/api'
 import { useToast, useModal } from 'taro-hooks'
+import { useStore } from '@/store'
 import style from './index.scss'
 
 type GameContentProps = {
@@ -19,11 +20,18 @@ const GameContent = props => {
     title: '确认操作',
     content: '确定要删除吗?'
   })
+  const { GlobalStore } = useStore()
 
   const handleInvolvedActivity = async () => {
+    if (checkDataTime()) {
+      show({
+        title: '活动已过期'
+      })
+      return
+    }
     try {
       const res = await $api.ActivityApi.involvedOrExitActivities({
-        userId: props.data.userId,
+        userId: GlobalStore.userInfo.id,
         activityId: props.data.id,
         status: 1
       })
@@ -32,15 +40,22 @@ const GameContent = props => {
       return
     }
 
+    handleClick()
     show({
       title: '参与成功'
     })
   }
 
   const handleExisActivity = async () => {
+    if (checkDataTime()) {
+      show({
+        title: '活动已过期'
+      })
+      return
+    }
     try {
       const res = await $api.ActivityApi.involvedOrExitActivities({
-        userId: props.data.userId,
+        userId: GlobalStore.userInfo.id,
         activityId: props.data.id,
         status: 0
       })
@@ -49,6 +64,7 @@ const GameContent = props => {
       return
     }
 
+    handleClick()
     show({
       title: '退出成功'
     })
@@ -68,16 +84,30 @@ const GameContent = props => {
         return
       }
 
+      handleClick()
+      props.handleReset()
       show({
         title: '删除成功'
       })
-      props.handleReset()
     }
+  }
+
+  const handleClick = () => {
+    props.handleClick && props.handleClick()
+  }
+
+  // 检查活动时间是否过期
+  const checkDataTime = () => {
+    const d = new Date(props.data.dateTime).getTime()
+    const n = new Date().getTime()
+    return n > d
   }
 
   return (
     <AtCard
-      title={`${props.data.busGame.type}: ${props.data.busGame.name}`}
+      title={`${props.data.busGame.type === 1 ? '剧本' : '桌游'}: ${
+        props.data.busGame.name
+      }`}
       className={style.activityGameContent}
     >
       <View>发起人: {props.data.user.nickName}</View>
@@ -89,24 +119,28 @@ const GameContent = props => {
         人数: {props.data.participants}/{props.data.busGame.peopleNum}
       </View>
       {props.data.edit ? (
-        <AtButton
-          type="primary"
-          size="small"
-          className={`${style.btn} ${style.btnDel}`}
-          onClick={handleDelActivity}
-        >
-          删除
-        </AtButton>
+        checkDataTime() ? null : (
+          <AtButton
+            type="primary"
+            size="small"
+            className={`${style.btn} ${style.btnDel}`}
+            onClick={handleDelActivity}
+          >
+            删除
+          </AtButton>
+        )
       ) : props.data.showInvolved ? (
-        <AtButton
-          type="primary"
-          size="small"
-          className={`${style.btn} ${style.btnInvolved}`}
-          onClick={handleInvolvedActivity}
-        >
-          参加
-        </AtButton>
-      ) : (
+        +props.data.participants < props.data.busGame.peopleNum ? (
+          <AtButton
+            type="primary"
+            size="small"
+            className={`${style.btn} ${style.btnInvolved}`}
+            onClick={handleInvolvedActivity}
+          >
+            参加
+          </AtButton>
+        ) : null
+      ) : checkDataTime() ? null : (
         <AtButton
           type="primary"
           size="small"

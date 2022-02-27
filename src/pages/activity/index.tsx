@@ -9,10 +9,9 @@ const Activity = () => {
   const [activityType, setActivityType] = useState(0)
 
   const handleClick = i => {
-    console.log(i)
     setActivityType(i)
   }
-  const tabList = [{ title: '可参加' }, { title: '已参加' }]
+  const tabList = [{ title: '所有活动' }, { title: '已参加' }]
 
   return (
     <View className={style.activityWrapper}>

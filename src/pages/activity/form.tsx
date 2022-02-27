@@ -19,8 +19,8 @@ const Form = () => {
   const [formData, setFormData] = useState({
     gameId: '',
     gameName: '',
-    location: '1',
-    price: '1',
+    location: '',
+    price: '',
     date: '',
     time: '',
     dateTime: ''
@@ -96,6 +96,11 @@ const Form = () => {
     setShowModal(true)
   }
 
+  const startDate = () => {
+    console.log(new Date().toJSON().slice(0, 10))
+    return new Date().toJSON().slice(0, 10)
+  }
+
   return (
     <View className={style.activityFormWrapper}>
       <AtForm>
@@ -160,6 +165,7 @@ const Form = () => {
               })
             }}
             value={formData.date}
+            start={startDate()}
             className={style.picker}
           >
             {formData.date ? (

@@ -24,7 +24,7 @@ const CanList = (props: ListProps) => {
   const fetch = async () => {
     const res = await $api.ActivityApi.findList({
       page,
-      pageSize: 20,
+      pageSize: 10,
       userId: GlobalStore.userInfo.id
     })
     res.list.forEach(item => {

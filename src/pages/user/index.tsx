@@ -30,23 +30,28 @@ const User = () => {
 
   return (
     <View>
-      <View> 用户: {GlobalStore.userInfo.nickName}</View>
+      <View> 用户: {GlobalStore.userInfo.nickName || '未登录'}</View>
       <AtList>
-        <AtListItem
-          title="游戏列表"
-          arrow="right"
-          onClick={() => handleClick('game')}
-        />
-        <AtListItem
-          title="创建活动"
-          arrow="right"
-          onClick={() => handleClick('activity')}
-        />
-        <AtListItem
-          title="我发起的活动"
-          arrow="right"
-          onClick={() => handleClick('activityList')}
-        />
+        {GlobalStore.userInfo.isAdmin ? (
+          <>
+            <AtListItem
+              title="游戏列表"
+              arrow="right"
+              onClick={() => handleClick('game')}
+            />
+            <AtListItem
+              title="创建活动"
+              arrow="right"
+              onClick={() => handleClick('activity')}
+            />
+            <AtListItem
+              title="我发起的活动"
+              arrow="right"
+              onClick={() => handleClick('activityList')}
+            />{' '}
+          </>
+        ) : null}
+
         <AtListItem
           title="点击授权"
           arrow="right"

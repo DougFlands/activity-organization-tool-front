@@ -26,7 +26,7 @@ const Game = props => {
   const fetch = async () => {
     const res = await $api.GameApi.findList({
       page,
-      pageSize: 20,
+      pageSize: 10,
       type: gameType + 1
     })
     setList(res.list)
@@ -60,7 +60,7 @@ const Game = props => {
       </AtList>
       <AtPagination
         total={total}
-        pageSize={20}
+        pageSize={10}
         current={page}
         onPageChange={handlePageChange}
         className={style.pagination}

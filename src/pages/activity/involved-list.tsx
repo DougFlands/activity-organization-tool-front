@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View } from '@tarojs/components'
+import { useReady } from '@tarojs/taro'
 import { AtTabs, AtTabsPane, AtPagination } from 'taro-ui'
 import { $api } from '@/api'
 import { useStore } from '@/store'
@@ -24,7 +25,7 @@ const InvolvedList = (props: ListProps) => {
   const fetch = async () => {
     const res = await $api.ActivityApi.involvedActivityList({
       page,
-      pageSize: 20,
+      pageSize: 10,
       userId: GlobalStore.userInfo.id
     })
     const list = res.list.map(item => {
@@ -37,9 +38,19 @@ const InvolvedList = (props: ListProps) => {
     setTotal(res.total)
   }
 
+  const handleClick = () => {
+    if (page === 1) {
+      fetch()
+    } else {
+      handlePageChange({ current: 1 })
+    }
+  }
+
   useEffect(() => {
-    fetch()
-  }, [page])
+    if (props.activityType === 1) {
+      fetch()
+    }
+  }, [page, props.activityType])
 
   return (
     <View className={style.activityInvolvedListWrapper}>
@@ -47,7 +58,7 @@ const InvolvedList = (props: ListProps) => {
         {gameList.map((item, index) => {
           return (
             <View key={index} className={style.content}>
-              <GameContent data={item} />
+              <GameContent data={item} handleClick={handleClick} />
             </View>
           )
         })}
@@ -55,6 +66,7 @@ const InvolvedList = (props: ListProps) => {
       <AtPagination
         total={total}
         pageSize={10}
+        onPageChange={handlePageChange}
         current={page}
         className={style.pagination}
       />

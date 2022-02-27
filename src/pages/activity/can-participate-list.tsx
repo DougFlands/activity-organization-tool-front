@@ -10,7 +10,7 @@ type ListProps = {
   activityType: number
 }
 
-// 可参加的活动
+// 所有活动
 const CanList = (props: ListProps) => {
   const [gameList, setGameList] = useState([])
   const [total, setTotal] = useState(0)
@@ -23,7 +23,7 @@ const CanList = (props: ListProps) => {
   const fetch = async () => {
     const res = await $api.ActivityApi.findList({
       page,
-      pageSize: 20
+      pageSize: 10
     })
     res.list.forEach(item => {
       item.showInvolved = true
@@ -32,9 +32,19 @@ const CanList = (props: ListProps) => {
     setTotal(res.total)
   }
 
+  const handleClick = () => {
+    if (page === 1) {
+      fetch()
+    } else {
+      handlePageChange({ current: 1 })
+    }
+  }
+
   useEffect(() => {
-    fetch()
-  }, [page])
+    if (props.activityType === 0) {
+      fetch()
+    }
+  }, [page, props.activityType])
 
   return (
     <View className={style.activityCanListWrapper}>
@@ -42,7 +52,7 @@ const CanList = (props: ListProps) => {
         {gameList.map((item, index) => {
           return (
             <View key={index} className={style.content}>
-              <GameContent data={item} />
+              <GameContent data={item} handleClick={handleClick} />
             </View>
           )
         })}
@@ -50,6 +60,7 @@ const CanList = (props: ListProps) => {
       <AtPagination
         total={total}
         pageSize={10}
+        onPageChange={handlePageChange}
         current={page}
         className={style.pagination}
       />

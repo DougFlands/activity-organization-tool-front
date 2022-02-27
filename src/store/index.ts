@@ -5,11 +5,11 @@ import Taro from '@tarojs/taro'
 
 class Store {
   @observable userInfo = {
-    id: 0,
+    id: '',
     openID: '',
     avatarUrl: '',
     nickName: '',
-    isAdmin: 1
+    isAdmin: 0
   }
 
   constructor() {
