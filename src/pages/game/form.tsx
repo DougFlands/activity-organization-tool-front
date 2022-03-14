@@ -18,7 +18,7 @@ const Menu = () => {
     name: '',
     introduction: '',
     type: 1,
-    peopleNum: 1,
+    peopleNum: '',
     id: 0
   })
   const [showToast] = useToast({
@@ -41,18 +41,24 @@ const Menu = () => {
       })
       return
     }
-    if (!formData.peopleNum) {
+    if (!formData.peopleNum || !+formData.peopleNum) {
       showToast({
-        title: '请输入人数'
+        title: '人数输入有误'
       })
       return
     }
     let res
     try {
       if (routerInfo.params.id) {
-        res = await $api.GameApi.update(formData)
+        res = await $api.GameApi.update({
+          ...formData,
+          peopleNum: +formData.peopleNum
+        })
       } else {
-        res = await $api.GameApi.create(formData)
+        res = await $api.GameApi.create({
+          ...formData,
+          peopleNum: +formData.peopleNum
+        })
       }
     } catch (error) {
       console.log(error)
@@ -151,7 +157,7 @@ const Menu = () => {
             onChange={value =>
               setFormData({
                 ...formData,
-                peopleNum: +value ? +value : formData.peopleNum
+                peopleNum: value + ''
               })
             }
           />

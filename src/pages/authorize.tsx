@@ -8,7 +8,7 @@ import { useToast, useRouter, useModal } from 'taro-hooks'
 
 const Authorize = () => {
   const { GlobalStore } = useStore()
-  const [routerInfo, { navigateBack }] = useRouter()
+  const [routerInfo, { navigateBack, redirectTo }] = useRouter()
   const [showToast] = useToast({
     mask: true,
     duration: 1500,
@@ -35,6 +35,7 @@ const Authorize = () => {
         title: '授权成功'
       })
       GlobalStore.setUserInfo(wxLogin.user)
+      redirectTo('/pages/index/index')
     }
   }
 

@@ -75,6 +75,12 @@ const Form = () => {
       return
     }
     formData.dateTime = `${formData.date} ${formData.time}:00`
+    if (new Date(formData.dateTime).getTime() < new Date().getTime()) {
+      show({
+        title: '选择的时间小于当前时间'
+      })
+      return
+    }
     let res
     try {
       if (routerInfo.params.id) {
@@ -96,10 +102,7 @@ const Form = () => {
     setShowModal(true)
   }
 
-  const startDate = () => {
-    console.log(new Date().toJSON().slice(0, 10))
-    return new Date().toJSON().slice(0, 10)
-  }
+  const startDate = () => new Date().toJSON().slice(0, 10)
 
   return (
     <View className={style.activityFormWrapper}>
