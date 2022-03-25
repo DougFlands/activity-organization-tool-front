@@ -1,0 +1,13 @@
+// 项目配置
+// 复制本文件，去掉 example
+module.exports = {
+  // 开发环境
+  dev: {
+    // 请求API地址
+    apiUrl: ''
+  },
+  // 生产环境
+  pro: {
+    apiUrl: ''
+  }
+}

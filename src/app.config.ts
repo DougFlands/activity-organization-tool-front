@@ -10,7 +10,7 @@ export default {
   window: {
     backgroundTextStyle: 'light',
     navigationBarBackgroundColor: '#fff',
-    navigationBarTitleText: 'WeChat',
+    navigationBarTitleText: '大叔鱼塘管理',
     navigationBarTextStyle: 'black'
   }
 }

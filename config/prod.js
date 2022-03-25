@@ -1,6 +1,12 @@
+let config = {}
+try {
+  config = require('./projectConfig').pro
+} catch (_) {}
+
 module.exports = {
   env: {
     NODE_ENV: '"production"',
+    ...config
   },
   defineConstants: {},
   mini: {},
@@ -13,5 +19,5 @@ module.exports = {
      *     .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin, [])
      * }
      */
-  },
-};
+  }
+}

@@ -9,7 +9,7 @@ import AuthApi from './auth'
 import GameApi from './game'
 import ActivityApi from './activity'
 
-export const baseApi = 'http://127.0.0.1:8888'
+export const baseApi = process.env.apiUrl
 
 enum ECode {
   OPERATION_SUCCESS = 0, // "操作成功"
