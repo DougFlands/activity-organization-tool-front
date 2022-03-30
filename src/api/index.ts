@@ -2,7 +2,7 @@ import {
   request as _request,
   addInterceptor,
   showToast,
-  navigateTo
+  navigateTo,
 } from '@tarojs/taro'
 import { GlobalStore } from '@/store'
 import AuthApi from './auth'
@@ -14,7 +14,7 @@ export const baseApi = process.env.apiUrl
 enum ECode {
   OPERATION_SUCCESS = 0, // "操作成功"
   UN_AUTHORIZED = 401, // 用户无权访问
-  UNAUTH_ERRO = 7 // "出错"
+  UNAUTH_ERRO = 7, // "出错"
 }
 
 export interface IApiData {
@@ -27,7 +27,7 @@ type TOptions = Omit<_request.Option<any>, 'url'>
 const interceptor = function(chain) {
   const requestParams = chain.requestParams
   requestParams.header = {
-    'x-user-id': GlobalStore.userInfo.id || ''
+    'x-user-id': GlobalStore.userInfo.id || '',
   }
 
   return chain.proceed(requestParams).then(res => {
@@ -41,12 +41,12 @@ function checkResponse(response: IApiData) {
 
   if (code === ECode.UN_AUTHORIZED) {
     navigateTo({
-      url: '/pages/authorize'
+      url: '/pages/authorize',
     })
     showToast({
       title: msg,
       icon: 'none',
-      duration: 1500
+      duration: 1500,
     })
 
     return Promise.reject({ code, msg })
@@ -57,7 +57,7 @@ function checkResponse(response: IApiData) {
     showToast({
       title: msg || '网络异常',
       icon: 'none',
-      duration: 1500
+      duration: 1500,
     })
     return Promise.reject({ code, msg })
   }
@@ -67,14 +67,14 @@ function checkResponse(response: IApiData) {
 function request(url: string, options: TOptions) {
   return _request<IApiData>({
     url: baseApi + url,
-    ...options
+    ...options,
   })
     .then(async res => await checkResponse(res.data))
     .catch(error => {
-      const errMsg = error.msg || error.errMsg || '异常'
+      const errMsg = error.msg || error.errMsg || '服务异常'
       showToast({
         title: errMsg.includes('request:fail') ? '网络异常' : errMsg,
-        icon: 'none'
+        icon: 'none',
       })
       return Promise.reject(error)
     })
@@ -86,7 +86,7 @@ export const httpService = {
   },
   post(url: string, data: any) {
     return request(url, { method: 'POST', data })
-  }
+  },
 }
 
 export interface IMODApiData extends IApiData {}
@@ -94,5 +94,5 @@ export interface IMODApiData extends IApiData {}
 export const $api = {
   AuthApi,
   GameApi,
-  ActivityApi
+  ActivityApi,
 }

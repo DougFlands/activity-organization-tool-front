@@ -42,7 +42,7 @@ const Authorize = () => {
   return (
     <View style={{ marginTop: '40%' }}>
       <AtButton type="primary" onClick={handleAuthorize}>
-        点我授权
+        {GlobalStore.userInfo.nickName ? '点我刷新' : '点我授权'}
       </AtButton>
     </View>
   )

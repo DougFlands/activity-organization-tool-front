@@ -1,0 +1,44 @@
+@import '~taro-ui/dist/style/components/input.scss';
+@import '~taro-ui/dist/style/components/icon.scss';
+
+.info {
+  margin-left: 20px;
+}
+
+.userListWrapper {
+  height: calc(100vh - 10px - env(safe-area-inset-bottom));
+  display: flex;
+  flex-direction: column;
+  .search {
+    margin-right: 15px;
+  }
+  .list {
+    flex: 1;
+    .listItem {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 15px;
+      .id {
+        min-width: 40px;
+      }
+      .up {
+        background-color: $color-error;
+        border-color: $color-error;
+      }
+      .down {
+        background-color: $color-warning;
+        border-color: $color-warning;
+      }
+
+      :global {
+        .at-button {
+          margin: 0;
+        }
+      }
+    }
+  }
+  .pagination {
+    margin-bottom: 10px;
+  }
+}

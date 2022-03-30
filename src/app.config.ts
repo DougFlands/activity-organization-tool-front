@@ -5,6 +5,7 @@ export default {
     'pages/game/form',
     'pages/activity/form',
     'pages/activity/list',
+    'pages/user/list',
     'pages/authorize'
   ],
   window: {

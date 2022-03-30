@@ -23,6 +23,9 @@ const User = () => {
       case 'authorize':
         navigateTo('/pages/authorize')
         break
+      case 'userList':
+        navigateTo('/pages/user/list')
+        break
       default:
         break
     }
@@ -30,9 +33,13 @@ const User = () => {
 
   return (
     <View>
-      <View> 用户: {GlobalStore.userInfo.nickName || '未登录'}</View>
+      <View className={`${style.info}`}>
+        {' '}
+        用户: {GlobalStore.userInfo.nickName || '未登录'}
+      </View>
+      <View className={`${style.info}`}> ID: {GlobalStore.userInfo.id}</View>
       <AtList>
-        {GlobalStore.userInfo.isAdmin ? (
+        {GlobalStore.userInfo.isAdmin >= 1 ? (
           <>
             <AtListItem
               title="游戏列表"
@@ -48,12 +55,22 @@ const User = () => {
               title="我发起的活动"
               arrow="right"
               onClick={() => handleClick('activityList')}
-            />{' '}
+            />
+          </>
+        ) : null}
+
+        {GlobalStore.userInfo.isAdmin >= 2 ? (
+          <>
+            <AtListItem
+              title="用户列表"
+              arrow="right"
+              onClick={() => handleClick('userList')}
+            />
           </>
         ) : null}
 
         <AtListItem
-          title="点击授权"
+          title={GlobalStore.userInfo.nickName ? '刷新用户信息' : '点击授权'}
           arrow="right"
           onClick={() => handleClick('authorize')}
         />
