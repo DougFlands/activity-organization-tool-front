@@ -31,10 +31,11 @@ const UserList = () => {
       })
       return
     }
+    console.log(ID)
     const res = await $api.AuthApi.userList({
       page,
       pageSize: 10,
-      userId: ID ? '' : +ID,
+      userId: ID ? +ID : '',
     })
     setList(res.list)
     setTotal(res.total)
@@ -49,7 +50,7 @@ const UserList = () => {
     })
     if (result.confirm) {
       const res = await $api.AuthApi.setAdminAuthority({
-        userId: ID,
+        userId: item.id,
         isAdmin: item.isAdmin === 0 ? 1 : 0,
       })
       await fetch()
@@ -60,8 +61,8 @@ const UserList = () => {
   }
 
   useEffect(() => {
-    // fetch()
-  })
+    fetch()
+  }, [])
 
   return (
     <View className={style.userListWrapper}>
@@ -83,7 +84,7 @@ const UserList = () => {
             <View key={item.id} className={style.listItem}>
               <View>
                 <text className={style.id}>{item.id}: </text>
-                <text>{item.name}</text>
+                <text>{item.nickName}</text>
               </View>
 
               {item.isAdmin === 0 ? (
