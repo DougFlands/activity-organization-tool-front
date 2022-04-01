@@ -23,13 +23,13 @@ const activityDetail = props => {
       nickName: '',
     },
     userId: 1,
-    location: '23',
-    price: '22',
-    participants: 2,
+    location: '',
+    price: '',
+    participants: 0,
     dateTime: '2022-04-05 00:00:00',
     userList: [
       {
-        nickName: 'test1',
+        nickName: '',
         isAdmin: 1,
       },
     ],
