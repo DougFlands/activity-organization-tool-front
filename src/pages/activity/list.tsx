@@ -25,7 +25,7 @@ const CanList = (props: ListProps) => {
     const res = await $api.ActivityApi.findList({
       page,
       pageSize: 10,
-      userId: GlobalStore.userInfo.id
+      userId: GlobalStore.userInfo.id,
     })
     res.list.forEach(item => {
       item.edit = true

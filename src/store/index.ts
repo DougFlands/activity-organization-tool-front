@@ -9,7 +9,7 @@ class Store {
     openID: '',
     avatarUrl: '',
     nickName: '',
-    isAdmin: 0
+    isAdmin: 0,
   }
 
   constructor() {
@@ -19,7 +19,7 @@ class Store {
   setUserInfo(data) {
     this.userInfo = {
       ...this.userInfo,
-      ...data
+      ...data,
     }
     Taro.setStorageSync('userInfo', JSON.stringify(this.userInfo))
   }
@@ -35,7 +35,7 @@ if (userInfo) {
 export interface IGlobalStore extends Store {}
 
 export const storesContext = React.createContext({
-  GlobalStore
+  GlobalStore,
 })
 export interface IStore {
   GlobalStore: IGlobalStore

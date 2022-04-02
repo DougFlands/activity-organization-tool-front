@@ -23,7 +23,7 @@ const CanList = (props: ListProps) => {
   const fetch = async () => {
     const res = await $api.ActivityApi.findList({
       page,
-      pageSize: 10
+      pageSize: 10,
     })
     res.list.forEach(item => {
       item.showInvolved = true

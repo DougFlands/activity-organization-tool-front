@@ -34,7 +34,7 @@ const UserList = () => {
     console.log(ID)
     const res = await $api.AuthApi.userList({
       page,
-      pageSize: 10,
+      pageSize: 20,
       userId: ID ? +ID : '',
     })
     setList(res.list)
@@ -62,7 +62,7 @@ const UserList = () => {
 
   useEffect(() => {
     fetch()
-  }, [])
+  }, [page])
 
   return (
     <View className={style.userListWrapper}>
@@ -112,7 +112,7 @@ const UserList = () => {
       </View>
       <AtPagination
         total={total}
-        pageSize={10}
+        pageSize={20}
         current={page}
         onPageChange={handlePageChange}
         className={style.pagination}

@@ -16,19 +16,19 @@ const Activity = () => {
 
   useEffect(() => {
     Taro.setNavigationBarTitle({
-      title: '首页'
+      title: '首页',
     })
   })
 
   return (
     <View className={style.activityWrapper}>
       <AtTabs current={activityType} tabList={tabList} onClick={handleClick}>
-        <AtTabsPane current={activityType} index={0}>
+        <AtTabsPane current={activityType} index={0} className={style.tabsPane}>
           <View className={style.pane}>
             <CanParticipateList activityType={activityType} />
           </View>
         </AtTabsPane>
-        <AtTabsPane current={activityType} index={1}>
+        <AtTabsPane current={activityType} index={1} className={style.tabsPane}>
           <View className={style.pane}>
             <InvolvedList activityType={activityType} />
           </View>

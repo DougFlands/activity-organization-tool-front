@@ -1,8 +1,28 @@
 @import '~taro-ui/dist/style/components/input.scss';
 @import '~taro-ui/dist/style/components/icon.scss';
 
-.info {
-  margin-left: 20px;
+@import '~taro-ui/dist/style/components/timeline.scss';
+@import '~taro-ui/dist/style/components/icon.scss';
+
+@import '~taro-ui/dist/style/components/avatar.scss';
+
+.home {
+  .header {
+    display: flex;
+    padding: 20px;
+  }
+  .right {
+    margin-left: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .content {
+    View {
+      margin-bottom: 15px;
+    }
+  }
 }
 
 .userListWrapper {

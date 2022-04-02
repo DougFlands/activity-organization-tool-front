@@ -6,7 +6,7 @@ import {
   AtButton,
   AtTextarea,
   AtRadio,
-  AtInputNumber
+  AtInputNumber,
 } from 'taro-ui'
 import Taro from '@tarojs/taro'
 import { useToast, useRouter, useModal } from 'taro-hooks'
@@ -19,17 +19,17 @@ const Menu = () => {
     introduction: '',
     type: 1,
     peopleNum: '',
-    id: 0
+    id: 0,
   })
   const [showToast] = useToast({
     mask: true,
     duration: 1500,
-    icon: 'none'
+    icon: 'none',
   })
 
   const [showModal] = useModal({
     title: '确认操作',
-    content: '确定要删除吗?'
+    content: '确定要删除吗?',
   })
 
   const [routerInfo, { navigateBack }] = useRouter()
@@ -37,13 +37,13 @@ const Menu = () => {
   const handleSubmit = async () => {
     if (!formData.name) {
       showToast({
-        title: '请输入名称'
+        title: '请输入名称',
       })
       return
     }
     if (!formData.peopleNum || !+formData.peopleNum) {
       showToast({
-        title: '人数输入有误'
+        title: '人数输入有误',
       })
       return
     }
@@ -52,12 +52,12 @@ const Menu = () => {
       if (routerInfo.params.id) {
         res = await $api.GameApi.update({
           ...formData,
-          peopleNum: +formData.peopleNum
+          peopleNum: +formData.peopleNum,
         })
       } else {
         res = await $api.GameApi.create({
           ...formData,
-          peopleNum: +formData.peopleNum
+          peopleNum: +formData.peopleNum,
         })
       }
     } catch (error) {
@@ -66,13 +66,13 @@ const Menu = () => {
     }
     await navigateBack()
     showToast({
-      title: '创建成功'
+      title: '创建成功',
     })
   }
 
   const handleDel = async () => {
     const result = await showModal({
-      confirmText: '删除'
+      confirmText: '删除',
     })
     if (result.confirm) {
       await $api.GameApi.del(formData)
@@ -100,13 +100,13 @@ const Menu = () => {
             className={style.formRight}
             options={[
               { label: '剧本', value: 1 },
-              { label: '桌游', value: 2 }
+              { label: '桌游', value: 2 },
             ]}
             value={formData.type}
             onClick={value => {
               setFormData({
                 ...formData,
-                type: value
+                type: value,
               })
             }}
           />
@@ -123,7 +123,7 @@ const Menu = () => {
             onChange={value =>
               setFormData({
                 ...formData,
-                name: `${value}`
+                name: `${value}`,
               })
             }
           />
@@ -139,7 +139,7 @@ const Menu = () => {
             onChange={value =>
               setFormData({
                 ...formData,
-                introduction: `${value}`
+                introduction: `${value}`,
               })
             }
           />
@@ -157,7 +157,7 @@ const Menu = () => {
             onChange={value =>
               setFormData({
                 ...formData,
-                peopleNum: value + ''
+                peopleNum: value + '',
               })
             }
           />

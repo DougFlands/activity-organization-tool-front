@@ -1,4 +1,4 @@
 export default {
-  navigationBarTitleText: '大叔鱼塘管理',
-  enableShareAppMessage: true
+  navigationBarTitleText: '游戏',
+  enableShareAppMessage: true,
 }

@@ -118,6 +118,9 @@ const GameContent = props => {
       className={style.activityGameContent}
     >
       <View onClick={handleJumpDetail}>
+        {!props.data.edit && props.data.isInvolved ? (
+          <View className={style.isInvolved}>已参加</View>
+        ) : null}
         <View>发起人: {props.data.user.nickName}</View>
         <View>地点: {props.data.location}</View>
         <View>费用: ￥{props.data.price}</View>
@@ -139,7 +142,8 @@ const GameContent = props => {
           </AtButton>
         )
       ) : props.data.showInvolved ? (
-        +props.data.participants < props.data.busGame.peopleNum ? (
+        +props.data.participants < props.data.busGame.peopleNum &&
+        !props.data.isInvolved ? (
           <AtButton
             type="primary"
             size="small"

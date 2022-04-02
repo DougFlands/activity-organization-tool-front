@@ -12,12 +12,12 @@ const Authorize = () => {
   const [showToast] = useToast({
     mask: true,
     duration: 1500,
-    icon: 'none'
+    icon: 'none',
   })
 
   const handleAuthorize = async () => {
     const user = await Taro.getUserProfile({
-      desc: '登陆'
+      desc: '登陆',
     })
     const { avatarUrl, nickName } = user.userInfo
     const loginRes = await Taro.login()
@@ -27,12 +27,12 @@ const Authorize = () => {
       const wxLogin = await $api.AuthApi.login({
         code: loginRes.code,
         avatarUrl,
-        nickName
+        nickName,
       })
       console.log(wxLogin)
       await navigateBack()
       showToast({
-        title: '授权成功'
+        title: '授权成功',
       })
       GlobalStore.setUserInfo(wxLogin.user)
       redirectTo('/pages/index/index')

@@ -11,7 +11,7 @@ const Index = () => {
   const [current, setCurrent] = useState(0)
   const tabList = [
     { title: '活动', iconType: 'home' },
-    { title: '我的', iconType: 'user' }
+    { title: '我的', iconType: 'user' },
   ]
 
   const handleClick = (page: number) => {

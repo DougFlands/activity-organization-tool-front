@@ -6,7 +6,7 @@ import {
   AtButton,
   AtModal,
   AtModalContent,
-  AtModalAction
+  AtModalAction,
 } from 'taro-ui'
 import { useToast, useRouter, useModal } from 'taro-hooks'
 import { $api } from '@/api'
@@ -23,13 +23,13 @@ const Form = () => {
     price: '',
     date: '',
     time: '',
-    dateTime: ''
+    dateTime: '',
   })
   const [showModal, setShowModal] = useState(false)
   const [show] = useToast({
     mask: true,
     duration: 1500,
-    icon: 'none'
+    icon: 'none',
   })
 
   const handleChoose = e => {
@@ -37,7 +37,7 @@ const Form = () => {
     setFormData({
       ...formData,
       gameId: e.id,
-      gameName: e.name
+      gameName: e.name,
     })
     setShowModal(false)
   }
@@ -46,38 +46,38 @@ const Form = () => {
     console.log(formData)
     if (!formData.gameId) {
       show({
-        title: '请选择游戏'
+        title: '请选择游戏',
       })
       return
     }
     if (!formData.location) {
       show({
-        title: '请输入地点'
+        title: '请输入地点',
       })
       return
     }
     if (!formData.price) {
       show({
-        title: '请输入费用'
+        title: '请输入费用',
       })
       return
     }
     if (!formData.date) {
       show({
-        title: '请选择日期'
+        title: '请选择日期',
       })
       return
     }
     if (!formData.time) {
       show({
-        title: '请选择时间'
+        title: '请选择时间',
       })
       return
     }
     formData.dateTime = `${formData.date} ${formData.time}:00`
     if (new Date(formData.dateTime).getTime() < new Date().getTime()) {
       show({
-        title: '选择的时间小于当前时间'
+        title: '选择的时间小于当前时间',
       })
       return
     }
@@ -94,7 +94,7 @@ const Form = () => {
     }
     await navigateBack()
     show({
-      title: '创建成功'
+      title: '创建成功',
     })
   }
 
@@ -134,7 +134,7 @@ const Form = () => {
             onChange={value =>
               setFormData({
                 ...formData,
-                location: `${value}`
+                location: `${value}`,
               })
             }
           />
@@ -151,7 +151,7 @@ const Form = () => {
             onChange={value =>
               setFormData({
                 ...formData,
-                price: `${+value ? value : formData.price}`
+                price: `${+value ? value : formData.price}`,
               })
             }
           />
@@ -164,7 +164,7 @@ const Form = () => {
             onChange={({ detail: { value } }) => {
               setFormData({
                 ...formData,
-                date: `${value}`
+                date: `${value}`,
               })
             }}
             value={formData.date}
@@ -186,7 +186,7 @@ const Form = () => {
             onChange={({ detail: { value } }) => {
               setFormData({
                 ...formData,
-                time: `${value}`
+                time: `${value}`,
               })
             }}
             value={formData.time}

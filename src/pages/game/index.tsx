@@ -27,7 +27,7 @@ const Game = () => {
 
   const handleJumpDetail = (detail = { id: '' }) => {
     handlerCreateGame({
-      id: detail.id
+      id: detail.id,
     })
   }
 
@@ -39,7 +39,7 @@ const Game = () => {
     const res = await $api.GameApi.findList({
       page,
       pageSize: 10,
-      type: gameType ? gameType : ''
+      type: gameType ? gameType : '',
     })
     setList(res.list)
     setTotal(res.total)

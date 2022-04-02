@@ -1,8 +1,15 @@
+@import '/src/app.scss';
+
 .activityWrapper {
   .pane {
     padding: 5px;
     background-color: #fafbfc;
     text-align: center;
+  }
+  :global {
+    .at-tabs__item--active {
+      background-color: #f1f1f1;
+    }
   }
 }
 .activityInvolvedListWrapper,
@@ -30,6 +37,14 @@
 
 .activityGameContent {
   text-align: start;
+  .isInvolved {
+    text-align: center;
+    color: $color-success;
+  }
+  .btn {
+    width: fit-content;
+    padding: 0 50px;
+  }
   .btnDel,
   .btnExit {
     border: 1px solid #ff4949;
@@ -70,4 +85,8 @@
       color: #000;
     }
   }
+}
+
+.activityDetail {
+  text-align: start;
 }

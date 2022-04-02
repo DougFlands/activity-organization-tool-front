@@ -11,7 +11,7 @@ type GameContentProps = {
 }
 
 const activityDetail = props => {
-  const [activityType, setActivityType] = useState({
+  const [activity, setActivity] = useState({
     busGame: {
       type: 0,
       name: '',
@@ -28,10 +28,10 @@ const activityDetail = props => {
     participants: 0,
     dateTime: '2022-04-05 00:00:00',
     userList: [
-      {
-        nickName: '',
-        isAdmin: 1,
-      },
+      // {
+      //   nickName: '',
+      //   isAdmin: 1,
+      // },
     ],
   })
   const [routerInfo, { navigateBack }] = useRouter()
@@ -41,7 +41,7 @@ const activityDetail = props => {
       const res = await $api.ActivityApi.find({
         id: routerInfo.params.id,
       })
-      setActivityType(res.busAct)
+      setActivity(res.busAct)
     } catch (error) {
       console.log(error)
       return
@@ -54,20 +54,21 @@ const activityDetail = props => {
 
   return (
     <AtCard
-      title={`${activityType.busGame.type === 1 ? '剧本' : '桌游'}: ${
-        activityType.busGame.name
+      title={`${activity.busGame.type === 1 ? '剧本' : '桌游'}: ${
+        activity.busGame.name
       }`}
       className={style.activityGameContent}
     >
-      <View>发起人: {activityType.user.nickName}</View>
-      <View>地点: {activityType.location}</View>
-      <View>费用: ￥{activityType.price}</View>
-      <View>开始时间: {activityType.dateTime}</View>
+      <View>发起人: {activity.user.nickName}</View>
+      <View>地点: {activity.location}</View>
+      <View>费用: ￥{activity.price}</View>
+      <View>开始时间: {activity.dateTime}</View>
       <View>
-        人数: {activityType.participants}/{activityType.busGame.peopleNum}
+        人数: {activity.participants}/{activity.busGame.peopleNum}
       </View>
+      <View>简介: {activity.busGame.introduction}</View>
       <View>
-        {activityType.userList.map(user => {
+        {activity.userList?.map((user: any) => {
           return <View>玩家: {user.nickName}</View>
         })}
       </View>

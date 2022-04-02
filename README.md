@@ -1,36 +1,14 @@
-# 后端
-## 游戏列表
-ID int
-createTime
-updateTime
-createUserId
+# 配置文件
+需要先新建配置文件  
+/config/projectConfig.js  
+/project.config.json  
+都有对应的 example   
 
-type string 1 剧本 2 桌游
-name string 
-introduction longstring
-peopleNum int
-
-
-## 活动
-ID int
-createTime
-updateTime
-createUserId
-
-gameId string 
-location string 
-price string
-date string
-time string
-
-
-## 用户
-userId
-token
-
-# 参加活动
-userid
-actid
-status  参加状态 0退出 1参加
+# run
+`yarn`
+`npm run dev` 本地环境
+`npm run build` 生产环境
 
 # TODO
+刷新用户名称
+优化参加人数sql

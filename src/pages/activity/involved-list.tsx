@@ -26,12 +26,12 @@ const InvolvedList = (props: ListProps) => {
     const res = await $api.ActivityApi.involvedActivityList({
       page,
       pageSize: 10,
-      userId: GlobalStore.userInfo.id
+      userId: GlobalStore.userInfo.id,
     })
     const list = res.list.map(item => {
       return {
         ...item,
-        ...item.busActivity
+        ...item.busActivity,
       }
     })
     setGameList(list)

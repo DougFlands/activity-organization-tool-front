@@ -1,12 +1,23 @@
 import React, { useState } from 'react'
-import { View } from '@tarojs/components'
-import { AtTabs, AtList, AtListItem, AtButton } from 'taro-ui'
+import { View, Button } from '@tarojs/components'
+import {
+  AtModal,
+  AtModalContent,
+  AtModalAction,
+  AtModalHeader,
+  AtTimeline,
+  AtList,
+  AtListItem,
+  AtAvatar,
+} from 'taro-ui'
 import { useRouter } from 'taro-hooks'
 import { useStore } from '@/store'
 
 import style from './index.scss'
 
 const User = () => {
+  const [modalIsOpened, setModalIsOpened] = useState(false)
+
   const { GlobalStore } = useStore()
   const [routerInfo, { navigateTo }] = useRouter()
   const handleClick = (page: string) => {
@@ -26,18 +37,29 @@ const User = () => {
       case 'userList':
         navigateTo('/pages/user/list')
         break
+      case 'about':
+        setModalIsOpened(true)
+        break
+
       default:
         break
     }
   }
 
   return (
-    <View>
-      <View className={`${style.info}`}>
-        {' '}
-        用户: {GlobalStore.userInfo.nickName || '未登录'}
+    <View className={style.home}>
+      <View className={style.header}>
+        {GlobalStore.userInfo.nickName ? (
+          <AtAvatar image={GlobalStore.userInfo.avatarUrl}></AtAvatar>
+        ) : null}
+        <View className={style.right}>
+          <View className={`${style.info}`}>
+            {GlobalStore.userInfo.nickName || '未登录'}
+          </View>
+          <View className={`${style.info}`}>ID: {GlobalStore.userInfo.id}</View>
+        </View>
       </View>
-      <View className={`${style.info}`}> ID: {GlobalStore.userInfo.id}</View>
+
       <AtList>
         {GlobalStore.userInfo.isAdmin >= 1 ? (
           <>
@@ -74,7 +96,60 @@ const User = () => {
           arrow="right"
           onClick={() => handleClick('authorize')}
         />
+        <AtListItem
+          title="关于本小程序"
+          arrow="right"
+          onClick={() => handleClick('about')}
+        />
       </AtList>
+
+      <AtModal isOpened={modalIsOpened}>
+        <AtModalHeader>小程序逻辑</AtModalHeader>
+        <AtModalContent>
+          <AtTimeline
+            pending
+            items={[
+              {
+                title: '注册',
+                content: [
+                  '我的 - 授权，然后找蚊子或者大叔提权到管理员',
+                  '提升完后 我的 - 刷新用户信息',
+                ],
+              },
+              {
+                title: '参与',
+                content: [
+                  '首页点击参与即可参加，点击活动可查看详情，详情中可以查看参与的人',
+                ],
+              },
+              {
+                title: '非DM可以不用往下看了',
+              },
+              {
+                title: '操作逻辑',
+                content: ['先新建游戏，然后发起活动，发起活动时选择游戏。'],
+              },
+              {
+                title: '新建游戏',
+                content: [
+                  '我的 - 游戏列表 - 新建',
+                  '游戏可以重复使用，请勿重复创建相同的游戏',
+                ],
+              },
+              {
+                title: '新建活动',
+                content: [
+                  '我的 - 活动列表 - 新建',
+                  '之后可以在我发起的活动中查看',
+                ],
+              },
+            ]}
+          ></AtTimeline>
+        </AtModalContent>
+        <AtModalAction>
+          <Button onClick={() => setModalIsOpened(false)}>确定</Button>
+        </AtModalAction>
+      </AtModal>
     </View>
   )
 }

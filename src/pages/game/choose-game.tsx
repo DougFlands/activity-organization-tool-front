@@ -27,7 +27,7 @@ const Game = props => {
     const res = await $api.GameApi.findList({
       page,
       pageSize: 10,
-      type: gameType + 1
+      type: gameType + 1,
     })
     setList(res.list)
     setTotal(res.total)
