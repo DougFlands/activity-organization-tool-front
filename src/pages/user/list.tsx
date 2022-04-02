@@ -31,7 +31,6 @@ const UserList = () => {
       })
       return
     }
-    console.log(ID)
     const res = await $api.AuthApi.userList({
       page,
       pageSize: 20,

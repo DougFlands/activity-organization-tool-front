@@ -29,7 +29,6 @@ const Authorize = () => {
         avatarUrl,
         nickName,
       })
-      console.log(wxLogin)
       await navigateBack()
       showToast({
         title: '授权成功',
