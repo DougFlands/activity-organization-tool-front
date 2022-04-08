@@ -163,7 +163,7 @@ const Menu = () => {
           />
         </View>
 
-        <AtButton type="primary" onClick={handleSubmit}>
+        <AtButton type="primary" onClick={handleSubmit} className={style.submit}>
           提交
         </AtButton>
 
