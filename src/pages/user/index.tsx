@@ -67,17 +67,20 @@ const User = () => {
               title="游戏列表"
               arrow="right"
               onClick={() => handleClick('game')}
+              iconInfo={{ size: 16, color: '#6190e8', value: 'playlist', }}
             />
             <AtListItem
               title="创建活动"
               arrow="right"
               onClick={() => handleClick('activity')}
+              iconInfo={{ size: 16, color: '#6190e8', value: 'add-circle', }}
             />
             <AtListItem
               title="我发起的活动"
               arrow="right"
               onClick={() => handleClick('activityList')}
-            />
+              iconInfo={{ size: 16, color: '#6190e8', value: 'calendar', }}
+              />
           </>
         ) : null}
 
@@ -87,7 +90,8 @@ const User = () => {
               title="用户列表"
               arrow="right"
               onClick={() => handleClick('userList')}
-            />
+              iconInfo={{ size: 16, color: '#6190e8', value: 'user', }}
+              />
           </>
         ) : null}
 

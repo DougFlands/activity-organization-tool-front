@@ -106,7 +106,7 @@ const Form = () => {
 
   return (
     <View className={style.activityFormWrapper}>
-      <AtForm>
+      <AtForm >
         <View className={style.formItem}>
           <View className={style.formLeft}>游戏:</View>
           <View className={`${style.formRight} ${style.game}`}>
@@ -117,8 +117,8 @@ const Form = () => {
                 <Text className={style.text}>请选择游戏</Text>
               )}
             </Text>
-            <AtButton onClick={handleClickChooseGame} className={style.btn}>
-              选择游戏
+            <AtButton onClick={handleClickChooseGame} className={style.btn}  type='secondary'>
+              请选择游戏
             </AtButton>
           </View>
         </View>
@@ -210,7 +210,7 @@ const Form = () => {
           <ChooseGame handleChoose={handleChoose} />
         </AtModalContent>
         <AtModalAction>
-          <AtButton onClick={() => setShowModal(false)}>取消</AtButton>
+          <AtButton onClick={() => setShowModal(false)} size='small'>取消</AtButton>
         </AtModalAction>
       </AtModal>
     </View>
