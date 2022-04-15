@@ -35,7 +35,8 @@ const Participate = props => {
             console.log(error)
             return
         }
-
+        props.data.isInvolved = true
+        props.data.participants = 1
         handleClick()
         show({
             title: '参与成功',
@@ -99,6 +100,7 @@ const Participate = props => {
         return n > d
     }
     useEffect(() => {
+        console.log(props.data)
         console.log(props.data.showInvolved)
     }, [])
     return (
@@ -115,7 +117,7 @@ const Participate = props => {
                     </AtButton>
                 )
             ) : props.data.showInvolved ? (
-                +props.data.participants < props.data.busGame.peopleNum &&
+                + props.data.participants < props.data.busGame.peopleNum &&
                     !props.data.isInvolved ? (
                     <AtButton
                         type="primary"

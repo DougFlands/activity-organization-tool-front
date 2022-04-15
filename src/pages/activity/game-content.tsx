@@ -3,15 +3,26 @@ import { AtCard } from 'taro-ui'
 import { useRouter } from 'taro-hooks'
 import style from './index.scss'
 import Participate from './participate'
+import React, { useState, useEffect } from 'react'
 
 const GameContent = props => {
   const [routerInfo, { navigateTo }] = useRouter()
 
   // 跳转详情
   const handleJumpDetail = () => {
+    if (checkIsDel()) return
     navigateTo(`/pages/activity/detail?id=${props.data.id}`)
   }
 
+  // 检查是否已删除
+  const checkIsDel = () => {
+    const time = new Date(props.data.deleteTime).getTime()
+    return time > 0
+  }
+  useEffect(() => {
+    console.log(props.data)
+    console.log(props.data.showInvolved)
+}, [])
   return (
     <AtCard
       title={`${props.data.busGame.type === 1 ? '剧本' : '桌游'}: ${props.data.busGame.name
@@ -19,9 +30,12 @@ const GameContent = props => {
       className={style.activityGameContent}
     >
       <View onClick={handleJumpDetail}>
-        { props.data.isInvolved ? (
+        {checkIsDel() ? (
+          <View className={style.isDel}>活动已被删除</View>
+        ) : !props.data.edit && props.data.isInvolved ? (
           <View className={style.isInvolved}>已参加</View>
-        ) : null}
+        ) : null
+        }
 
         <View>发起人: {props.data.user.nickName}</View>
         <View>地点: {props.data.location}</View>
@@ -31,8 +45,10 @@ const GameContent = props => {
           人数: {props.data.participants}/{props.data.busGame.peopleNum}
         </View>
       </View>
-      <Participate data={props.data}/>
-    </AtCard>
+      {
+        <Participate data={props.data} />
+      }
+    </AtCard >
   )
 }
 

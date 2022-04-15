@@ -25,7 +25,8 @@ const CanList = (props: ListProps) => {
       page,
       pageSize: 10,
     })
-    res.list.forEach(item => {
+    // 当前用户是否已经参加
+    res.list && res.list.forEach(item => {
       item.showInvolved = true
     })
     setGameList(res.list)
