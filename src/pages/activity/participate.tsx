@@ -1,13 +1,11 @@
+// 参加按钮组件
 import { View } from '@tarojs/components'
-import {  AtButton } from 'taro-ui'
+import React, { useState, useEffect } from 'react'
+import { AtButton } from 'taro-ui'
 import { $api } from '@/api'
 import { useToast, useModal } from 'taro-hooks'
 import { useStore } from '@/store'
 import style from './index.scss'
-type ParticipateProps = {
-    data: any
-  }
-  
 const Participate = props => {
     const [show] = useToast({
         mask: true,
@@ -100,7 +98,9 @@ const Participate = props => {
         const n = new Date().getTime()
         return n > d
     }
-
+    useEffect(() => {
+        console.log(props.data.showInvolved)
+    }, [])
     return (
         <View>
             {props.data.edit ? (

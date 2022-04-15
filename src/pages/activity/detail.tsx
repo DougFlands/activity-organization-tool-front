@@ -5,6 +5,7 @@ import { $api } from '@/api'
 import { useRouter } from 'taro-hooks'
 import { useStore } from '@/store'
 import style from './index.scss'
+import Participate from './participate'
 
 type GameContentProps = {
   data: any
@@ -26,7 +27,7 @@ const activityDetail = props => {
     location: '',
     price: '',
     participants: 0,
-    dateTime: '2022-04-05 00:00:00',
+    dateTime: '',
     userList: [
       // {
       //   nickName: '',
@@ -72,6 +73,8 @@ const activityDetail = props => {
           return <View>玩家: {user.nickName}</View>
         })}
       </View>
+      <Participate data={activity}/>
+
     </AtCard>
   )
 }

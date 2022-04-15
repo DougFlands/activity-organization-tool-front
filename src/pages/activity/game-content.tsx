@@ -30,8 +30,7 @@ const GameContent = props => {
           人数: {props.data.participants}/{props.data.busGame.peopleNum}
         </View>
       </View>
-      {/* 参加 */}
-      <Participate />
+      <Participate data={props.data}/>
     </AtCard>
   )
 }
