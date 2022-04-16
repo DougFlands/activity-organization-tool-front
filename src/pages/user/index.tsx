@@ -10,7 +10,7 @@ import {
   AtListItem,
   AtAvatar,
 } from 'taro-ui'
-import { useRouter } from 'taro-hooks'
+import { useRouter, useRequestSubscribeMessage, useToast } from 'taro-hooks'
 import { useStore } from '@/store'
 
 import style from './index.scss'
@@ -20,6 +20,24 @@ const User = () => {
 
   const { GlobalStore } = useStore()
   const [routerInfo, { navigateTo }] = useRouter()
+
+  const [show] = useToast({
+    mask: true,
+    duration: 500,
+    icon: 'none',
+  })
+
+  const [requestSubscribeMessage] = useRequestSubscribeMessage()
+
+  // 增加通知机会
+  const addSubscribeCount = async () => {
+    const res = await requestSubscribeMessage(process.env.templateID)
+    console.log(res)
+    show({
+      title: '活动通知次数 + 3',
+    })
+  }
+
   const handleClick = (page: string) => {
     switch (page) {
       case 'activity':
@@ -67,20 +85,25 @@ const User = () => {
               title="游戏列表"
               arrow="right"
               onClick={() => handleClick('game')}
-              iconInfo={{ size: 16, color: '#6190e8', value: 'playlist', }}
+              iconInfo={{ size: 16, color: '#6190e8', value: 'playlist' }}
             />
             <AtListItem
               title="创建活动"
               arrow="right"
               onClick={() => handleClick('activity')}
-              iconInfo={{ size: 16, color: '#6190e8', value: 'add-circle', }}
+              iconInfo={{ size: 16, color: '#6190e8', value: 'add-circle' }}
             />
             <AtListItem
               title="我发起的活动"
               arrow="right"
               onClick={() => handleClick('activityList')}
-              iconInfo={{ size: 16, color: '#6190e8', value: 'calendar', }}
-              />
+              iconInfo={{ size: 16, color: '#6190e8', value: 'calendar' }}
+            />
+            <AtListItem
+              title="增加活动人满通知次数"
+              arrow="right"
+              onClick={addSubscribeCount}
+            />
           </>
         ) : null}
 
@@ -90,8 +113,8 @@ const User = () => {
               title="用户列表"
               arrow="right"
               onClick={() => handleClick('userList')}
-              iconInfo={{ size: 16, color: '#6190e8', value: 'user', }}
-              />
+              iconInfo={{ size: 16, color: '#6190e8', value: 'user' }}
+            />
           </>
         ) : null}
 

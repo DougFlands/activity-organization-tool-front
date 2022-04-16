@@ -112,10 +112,7 @@ const GameContent = props => {
   }
 
   // 检查是否已删除
-  const checkIsDel = () => {
-    const time = new Date(props.data.deleteTime).getTime()
-    return time > 0
-  }
+  const checkIsDel = () => !!props.data.deleteTime
 
   return (
     <AtCard

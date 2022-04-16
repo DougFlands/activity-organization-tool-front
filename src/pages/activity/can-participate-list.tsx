@@ -25,10 +25,10 @@ const CanList = (props: ListProps) => {
       page,
       pageSize: 10,
     })
-    res.list.forEach(item => {
+    res.list?.forEach(item => {
       item.showInvolved = true
     })
-    setGameList(res.list)
+    setGameList(res.list || [])
     setTotal(res.total)
   }
 

@@ -8,7 +8,7 @@ import {
   AtModalContent,
   AtModalAction,
 } from 'taro-ui'
-import { useToast, useRouter, useModal } from 'taro-hooks'
+import { useToast, useRouter, useRequestSubscribeMessage } from 'taro-hooks'
 import { $api } from '@/api'
 import ChooseGame from '../game/choose-game'
 import style from './index.scss'
@@ -16,6 +16,7 @@ import style from './index.scss'
 const Form = () => {
   const [routerInfo, { navigateBack }] = useRouter()
 
+  const [requestSubscribeMessage] = useRequestSubscribeMessage()
   const [formData, setFormData] = useState({
     gameId: '',
     gameName: '',
@@ -92,6 +93,7 @@ const Form = () => {
       console.log(error)
       return
     }
+    await requestSubscribeMessage(process.env.templateID)
     await navigateBack()
     show({
       title: '创建成功',
@@ -106,7 +108,7 @@ const Form = () => {
 
   return (
     <View className={style.activityFormWrapper}>
-      <AtForm >
+      <AtForm>
         <View className={style.formItem}>
           <View className={style.formLeft}>游戏:</View>
           <View className={`${style.formRight} ${style.game}`}>
@@ -117,7 +119,11 @@ const Form = () => {
                 <Text className={style.text}>请选择游戏</Text>
               )}
             </Text>
-            <AtButton onClick={handleClickChooseGame} className={style.btn}  type='secondary'>
+            <AtButton
+              onClick={handleClickChooseGame}
+              className={style.btn}
+              type="secondary"
+            >
               请选择游戏
             </AtButton>
           </View>
@@ -203,6 +209,14 @@ const Form = () => {
         <AtButton type="primary" onClick={handleSubmit}>
           提交
         </AtButton>
+        <View className={style.tips}>
+          <View>提交后会索取通知权限</View>
+          <View>开启记住后不会弹窗，会自动授权</View>
+          <View>当活动人满后发出通知</View>
+          <View>每次增加活动会增加3次通知机会</View>
+          <View>3次机会用完后人满不会通知(微信限制)</View>
+          <View>可以在我的页面手动增加通知次数</View>
+        </View>
       </AtForm>
 
       <AtModal isOpened={showModal}>
@@ -210,7 +224,9 @@ const Form = () => {
           <ChooseGame handleChoose={handleChoose} />
         </AtModalContent>
         <AtModalAction>
-          <AtButton onClick={() => setShowModal(false)} size='small'>取消</AtButton>
+          <AtButton onClick={() => setShowModal(false)} size="small">
+            取消
+          </AtButton>
         </AtModalAction>
       </AtModal>
     </View>
