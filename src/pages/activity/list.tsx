@@ -27,10 +27,10 @@ const CanList = (props: ListProps) => {
       pageSize: 10,
       userId: GlobalStore.userInfo.id,
     })
-    res.list.forEach(item => {
+    res.list?.forEach(item => {
       item.edit = true
     })
-    setGameList(res.list)
+    setGameList(res.list || [])
     setTotal(res.total)
   }
 
