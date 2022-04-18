@@ -1,4 +1,4 @@
-import { View, } from '@tarojs/components'
+import { View } from '@tarojs/components'
 import { AtCard } from 'taro-ui'
 import { useRouter } from 'taro-hooks'
 import style from './index.scss'
@@ -22,14 +22,21 @@ const GameContent = props => {
   useEffect(() => {
     console.log(props.data)
     console.log(props.data.showInvolved)
-}, [])
+  }, [])
   return (
     <AtCard
-      title={`${props.data.busGame.type === 1 ? '剧本' : '桌游'}: ${props.data.busGame.name
-        }`}
+      title={`${props.data.busGame.type === 1 ? '剧本' : '桌游'}: ${
+        props.data.busGame.name
+      }`}
       className={style.activityGameContent}
     >
       <View onClick={handleJumpDetail}>
+        {checkIsDel() ? (
+          <View className={style.isDel}>活动已被删除</View>
+        ) : !props.data.edit && props.data.isInvolved ? (
+          <View className={style.isInvolved}>已参加</View>
+        ) : null}
+
         <View>发起人: {props.data.user.nickName}</View>
         <View>地点: {props.data.location}</View>
         <View>费用: ￥{props.data.price}</View>
@@ -38,10 +45,8 @@ const GameContent = props => {
           人数: {props.data.participants}/{props.data.busGame.peopleNum}
         </View>
       </View>
-      {
-        <Participate data={props.data} />
-      }
-    </AtCard >
+      {<Participate data={props.data} handleClick={props.handleClick} />}
+    </AtCard>
   )
 }
 
