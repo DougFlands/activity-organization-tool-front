@@ -30,13 +30,6 @@ const GameContent = props => {
       className={style.activityGameContent}
     >
       <View onClick={handleJumpDetail}>
-        {checkIsDel() ? (
-          <View className={style.isDel}>活动已被删除</View>
-        ) : !props.data.edit && props.data.isInvolved ? (
-          <View className={style.isInvolved}>已参加</View>
-        ) : null
-        }
-
         <View>发起人: {props.data.user.nickName}</View>
         <View>地点: {props.data.location}</View>
         <View>费用: ￥{props.data.price}</View>

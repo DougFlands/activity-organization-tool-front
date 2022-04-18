@@ -60,6 +60,7 @@ const Participate = props => {
             console.log(error)
             return
         }
+        props.data.isInvolved = false
 
         handleClick()
         show({
@@ -93,6 +94,11 @@ const Participate = props => {
         props.handleClick && props.handleClick()
     }
 
+    // 检查是否已删除
+    const checkIsDel = () => {
+        const time = new Date(props.data.deleteTime).getTime()
+        return time > 0
+    }
     // 检查活动时间是否过期
     const checkDataTime = () => {
         const d = new Date(props.data.dateTime).getTime()
@@ -100,11 +106,14 @@ const Participate = props => {
         return n > d
     }
     useEffect(() => {
-        console.log(props.data)
-        console.log(props.data.showInvolved)
+        console.log('参加', props.data.showInvolved)
     }, [])
     return (
         <View>
+            {checkIsDel() ? (
+                <View className={style.isDel}>活动已被删除</View>
+            ) : null
+            }
             {props.data.edit ? (
                 checkDataTime() ? null : (
                     <AtButton
@@ -117,27 +126,31 @@ const Participate = props => {
                     </AtButton>
                 )
             ) : props.data.showInvolved ? (
-                + props.data.participants < props.data.busGame.peopleNum &&
-                    !props.data.isInvolved ? (
-                    <AtButton
-                        type="primary"
-                        size="small"
-                        className={`${style.btn} ${style.btnInvolved}`}
-                        onClick={handleInvolvedActivity}
-                    >
-                        参加
-                    </AtButton>
-                ) : null
-            ) : checkDataTime() ? null : (
-                <AtButton
-                    type="primary"
-                    size="small"
-                    className={`${style.btn} ${style.btnExit}`}
-                    onClick={handleExisActivity}
-                >
-                    退出
-                </AtButton>
-            )}
+                <View className={style.isInvolved}>已参加</View>
+                // + props.data.participants < props.data.busGame.peopleNum &&
+                //     !props.data.isInvolved ? (
+                //     <AtButton
+                //         type="primary"
+                //         size="small"
+                //         className={`${style.btn} ${style.btnInvolved}`}
+                //         onClick={handleInvolvedActivity}
+                //     >
+                //         参加
+                //     </AtButton>
+                // ) : null
+            ) : <View className={style.isInvolved}>退出</View>
+
+                // checkDataTime() ? null : (
+                //     <AtButton
+                //         type="primary"
+                //         size="small"
+                //         className={`${style.btn} ${style.btnExit}`}
+                //         onClick={handleExisActivity}
+                //     >
+                //         退出
+                //     </AtButton>
+                // )
+            }
         </View>
     )
 }
