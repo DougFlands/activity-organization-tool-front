@@ -4,12 +4,22 @@ import {
   showToast,
   navigateTo,
 } from '@tarojs/taro'
+import { getAccountInfoSync, getSystemInfoSync } from '@tarojs/taro'
 import { GlobalStore } from '@/store'
 import AuthApi from './auth'
 import GameApi from './game'
 import ActivityApi from './activity'
 
-export const baseApi = process.env.apiUrl
+// 是否为生产版
+const isRelease = getAccountInfoSync()?.miniProgram?.envVersion === 'release'
+// 是否为开发者工具
+const isDevtools = getSystemInfoSync()?.platform === 'devtools'
+
+export const baseApi = isDevtools
+  ? process.env.apiUrl
+  : isRelease
+  ? process.env.apiUrl
+  : process.env.apiDevUrl
 
 enum ECode {
   OPERATION_SUCCESS = 0, // "操作成功"

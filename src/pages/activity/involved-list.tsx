@@ -28,13 +28,13 @@ const InvolvedList = (props: ListProps) => {
       pageSize: 10,
       userId: GlobalStore.userInfo.id,
     })
-    const list = res.list.map(item => {
+    const list = res.list?.map(item => {
       return {
         ...item,
         ...item.busActivity,
       }
     })
-    setGameList(list)
+    setGameList(list || [])
     setTotal(res.total)
   }
 
