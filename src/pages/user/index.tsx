@@ -103,6 +103,7 @@ const User = () => {
               title="增加活动人满通知次数"
               arrow="right"
               onClick={addSubscribeCount}
+              iconInfo={{ size: 16, color: '#6190e8', value: 'add' }}
             />
           </>
         ) : null}

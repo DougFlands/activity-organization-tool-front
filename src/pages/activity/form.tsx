@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { View, Picker, Text } from '@tarojs/components'
 import {
+  AtRadio,
   AtForm,
   AtInput,
   AtButton,
@@ -20,11 +21,13 @@ const Form = () => {
   const [formData, setFormData] = useState({
     gameId: '',
     gameName: '',
+    ifOnline: true,
     location: '',
     price: '',
     date: '',
-    time: '',
+    time: '14:00',
     dateTime: '',
+    endTime: '18:00'
   })
   const [showModal, setShowModal] = useState(false)
   const [show] = useToast({
@@ -32,7 +35,6 @@ const Form = () => {
     duration: 1500,
     icon: 'none',
   })
-
   const handleChoose = e => {
     console.log(e)
     setFormData({
@@ -106,6 +108,27 @@ const Form = () => {
 
   const startDate = () => new Date().toJSON().slice(0, 10)
 
+  const renderLocation = () => {
+    if (!formData.ifOnline) {
+      return (
+        <View className={style.formItem}>
+          <AtInput
+            className={style.formRight2}
+            name="location"
+            type="text"
+            placeholder="请输入..."
+            value={formData.location}
+            onChange={value =>
+              setFormData({
+                ...formData,
+                location: `${value}`,
+              })
+            }
+          />
+        </View>
+      )
+    }
+  }
   return (
     <View className={style.activityFormWrapper}>
       <AtForm>
@@ -131,21 +154,23 @@ const Form = () => {
 
         <View className={style.formItem}>
           <View className={style.formLeft}>游戏地点:</View>
-          <AtInput
-            className={style.formRight}
-            name="location"
-            type="text"
-            placeholder="请输入..."
-            value={formData.location}
-            onChange={value =>
+          <AtRadio
+            className={style.formRight3}
+            options={[
+              { label: '线上', value: true },
+              { label: '线下', value: false },
+            ]}
+            value={formData.ifOnline}
+            onClick={value =>
               setFormData({
                 ...formData,
-                location: `${value}`,
+                ifOnline: value,
               })
             }
           />
         </View>
-
+        {/* 动态渲染游戏地点 */}
+        {renderLocation()}
         <View className={style.formItem}>
           <View className={style.formLeft}>费用:</View>
           <AtInput
@@ -186,7 +211,7 @@ const Form = () => {
         </View>
 
         <View className={style.formItem}>
-          <View className={style.formLeft}>时间:</View>
+          <View className={style.formLeft}>开始时间:</View>
           <Picker
             mode="time"
             onChange={({ detail: { value } }) => {
@@ -200,6 +225,27 @@ const Form = () => {
           >
             {formData.time ? (
               <View className={style.text}>{formData.time}</View>
+            ) : (
+              <View>请选择时间</View>
+            )}
+          </Picker>
+        </View>
+
+        <View className={style.formItem}>
+          <View className={style.formLeft}>结束时间:</View>
+          <Picker
+            mode="time"
+            onChange={({ detail: { value } }) => {
+              setFormData({
+                ...formData,
+                endTime: `${value}`,
+              })
+            }}
+            value={formData.endTime}
+            className={style.picker}
+          >
+            {formData.endTime ? (
+              <View className={style.text}>{formData.endTime}</View>
             ) : (
               <View>请选择时间</View>
             )}

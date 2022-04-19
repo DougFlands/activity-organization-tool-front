@@ -28,6 +28,7 @@ const activityDetail = props => {
     price: '',
     participants: 0,
     dateTime: '',
+    endTime:'',
     userList: [
       // {
       //   nickName: '',
@@ -64,6 +65,7 @@ const activityDetail = props => {
       <View>地点: {activity.location}</View>
       <View>费用: ￥{activity.price}</View>
       <View>开始时间: {activity.dateTime}</View>
+      <View>结束时间: {activity.endTime}</View>
       <View>
         人数: {activity.participants}/{activity.busGame.peopleNum}
       </View>
