@@ -26,8 +26,8 @@ const Form = () => {
     price: '',
     date: '',
     time: '14:00',
+    endTime: '18:00',
     dateTime: '',
-    endTime: '18:00'
   })
   const [showModal, setShowModal] = useState(false)
   const [show] = useToast({
@@ -73,7 +73,13 @@ const Form = () => {
     }
     if (!formData.time) {
       show({
-        title: '请选择时间',
+        title: '请选择开始时间',
+      })
+      return
+    }
+    if (!formData.endTime) {
+      show({
+        title: '请选择结束时间',
       })
       return
     }
