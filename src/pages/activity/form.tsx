@@ -22,6 +22,7 @@ const Form = () => {
     gameId: '',
     gameName: '',
     ifOnline: true,
+    ifConfirmDate: true,
     location: '',
     price: '',
     date: '',
@@ -53,37 +54,16 @@ const Form = () => {
       })
       return
     }
-    if (!formData.location) {
-      show({
-        title: '请输入地点',
-      })
-      return
-    }
     if (!formData.price) {
       show({
         title: '请输入费用',
       })
       return
     }
-    if (!formData.date) {
-      show({
-        title: '请选择日期',
-      })
-      return
-    }
-    if (!formData.time) {
-      show({
-        title: '请选择开始时间',
-      })
-      return
-    }
-    if (!formData.endTime) {
-      show({
-        title: '请选择结束时间',
-      })
-      return
-    }
     formData.dateTime = `${formData.date} ${formData.time}:00`
+    if (!formData.ifConfirmDate) {
+      formData.dateTime = `2099-12-31 23:59:59`
+    }
     if (new Date(formData.dateTime).getTime() < new Date().getTime()) {
       show({
         title: '选择的时间小于当前时间',
@@ -131,6 +111,84 @@ const Form = () => {
               })
             }
           />
+        </View>
+      )
+    }
+  }
+  // 动态渲染日期
+  const renderDate = () => {
+    if (formData.ifConfirmDate) {
+      return (
+        <View className={style.formItem}>
+          <View className={style.formLeft}>日期:</View>
+          <Picker
+            mode="date"
+            onChange={({ detail: { value } }) => {
+              setFormData({
+                ...formData,
+                date: `${value}`,
+              })
+            }}
+            value={formData.date}
+            start={startDate()}
+            className={style.picker}
+          >
+            {formData.date ? (
+              <View className={style.text}>{formData.date}</View>
+            ) : (
+              <View>请选择日期</View>
+            )}
+          </Picker>
+        </View>
+      )
+    }
+  }
+  // 动态渲染时间
+  const renderTime = () => {
+    if (formData.ifConfirmDate) {
+      return (
+        <View className={style.formItem}>
+          <View className={style.formItem}>
+            <View className={style.formLeft}>开始时间:</View>
+            <Picker
+              mode="time"
+              onChange={({ detail: { value } }) => {
+                setFormData({
+                  ...formData,
+                  time: `${value}`,
+                })
+              }}
+              value={formData.time}
+              className={style.picker}
+            >
+              {formData.time ? (
+                <View className={style.text}>{formData.time}</View>
+              ) : (
+                <View>请选择时间</View>
+              )}
+            </Picker>
+          </View>
+
+          <View className={style.formItem}>
+            <View className={style.formLeft}>结束时间:</View>
+            <Picker
+              mode="time"
+              onChange={({ detail: { value } }) => {
+                setFormData({
+                  ...formData,
+                  endTime: `${value}`,
+                })
+              }}
+              value={formData.endTime}
+              className={style.picker}
+            >
+              {formData.endTime ? (
+                <View className={style.text}>{formData.endTime}</View>
+              ) : (
+                <View>请选择时间</View>
+              )}
+            </Picker>
+          </View>
         </View>
       )
     }
@@ -195,69 +253,26 @@ const Form = () => {
         </View>
 
         <View className={style.formItem}>
-          <View className={style.formLeft}>日期:</View>
-          <Picker
-            mode="date"
-            onChange={({ detail: { value } }) => {
+          <View className={style.formLeft}>活动时间:</View>
+          <AtRadio
+            className={style.formRight3}
+            options={[
+              { label: '确定日期', value: true },
+              { label: '时间待定', value: false },
+            ]}
+            value={formData.ifConfirmDate}
+            onClick={value =>
               setFormData({
                 ...formData,
-                date: `${value}`,
+                ifConfirmDate: value,
               })
-            }}
-            value={formData.date}
-            start={startDate()}
-            className={style.picker}
-          >
-            {formData.date ? (
-              <View className={style.text}>{formData.date}</View>
-            ) : (
-              <View>请选择日期</View>
-            )}
-          </Picker>
+            }
+          />
         </View>
-
-        <View className={style.formItem}>
-          <View className={style.formLeft}>开始时间:</View>
-          <Picker
-            mode="time"
-            onChange={({ detail: { value } }) => {
-              setFormData({
-                ...formData,
-                time: `${value}`,
-              })
-            }}
-            value={formData.time}
-            className={style.picker}
-          >
-            {formData.time ? (
-              <View className={style.text}>{formData.time}</View>
-            ) : (
-              <View>请选择时间</View>
-            )}
-          </Picker>
-        </View>
-
-        <View className={style.formItem}>
-          <View className={style.formLeft}>结束时间:</View>
-          <Picker
-            mode="time"
-            onChange={({ detail: { value } }) => {
-              setFormData({
-                ...formData,
-                endTime: `${value}`,
-              })
-            }}
-            value={formData.endTime}
-            className={style.picker}
-          >
-            {formData.endTime ? (
-              <View className={style.text}>{formData.endTime}</View>
-            ) : (
-              <View>请选择时间</View>
-            )}
-          </Picker>
-        </View>
-
+        {/* 动态渲染日期 */}
+        {renderDate()}
+        {/* 动态渲染时间 */}
+        {renderTime()}
         <AtButton type="primary" onClick={handleSubmit}>
           提交
         </AtButton>
