@@ -23,18 +23,33 @@ const User = () => {
 
   const [show] = useToast({
     mask: true,
-    duration: 500,
+    duration: 1000,
     icon: 'none',
   })
 
   const [requestSubscribeMessage] = useRequestSubscribeMessage()
 
-  // 增加通知机会
-  const addSubscribeCount = async () => {
-    const res = await requestSubscribeMessage(process.env.templateID)
+  // 增加活动人满通知次数
+  const addActReadySubscribeCount = async () => {
+    const res = await requestSubscribeMessage(process.env.templateActReady)
+    let count = 0
+    Object.keys(res).forEach(r => (count += Number(res[r] === 'accept')))
     console.log(res)
     show({
-      title: '活动通知次数 + 3',
+      title: `活动通知次数 + ${count}`,
+    })
+  }
+
+  // 增加备胎转正通知次数
+  const addActSpareTireInvolvedSubscribeCount = async () => {
+    const res = await requestSubscribeMessage(
+      process.env.templateActSpareTireInvolved,
+    )
+    let count = 0
+    Object.keys(res).forEach(r => (count += Number(res[r] === 'accept')))
+    console.log(res)
+    show({
+      title: `活动通知次数 + ${count}`,
     })
   }
 
@@ -102,7 +117,7 @@ const User = () => {
             <AtListItem
               title="增加活动人满通知次数"
               arrow="right"
-              onClick={addSubscribeCount}
+              onClick={addActReadySubscribeCount}
               iconInfo={{ size: 16, color: '#6190e8', value: 'add' }}
             />
           </>
@@ -118,7 +133,12 @@ const User = () => {
             />
           </>
         ) : null}
-
+        <AtListItem
+          title="增加活动备胎转正通知次数"
+          arrow="right"
+          onClick={addActSpareTireInvolvedSubscribeCount}
+          iconInfo={{ size: 16, color: '#6190e8', value: 'add' }}
+        />
         <AtListItem
           title={GlobalStore.userInfo.nickName ? '刷新用户信息' : '点击授权'}
           arrow="right"

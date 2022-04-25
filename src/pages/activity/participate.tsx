@@ -3,7 +3,7 @@ import { View } from '@tarojs/components'
 import React, { useState, useEffect } from 'react'
 import { AtButton } from 'taro-ui'
 import { $api } from '@/api'
-import { useToast, useModal } from 'taro-hooks'
+import { useToast, useModal, useRequestSubscribeMessage } from 'taro-hooks'
 import { useStore } from '@/store'
 import style from './index.scss'
 const Participate = props => {
@@ -17,6 +17,7 @@ const Participate = props => {
     content: '确定要删除吗?',
   })
   const { GlobalStore } = useStore()
+  const [requestSubscribeMessage] = useRequestSubscribeMessage()
 
   const handleInvolvedActivity = async () => {
     if (checkDataTime()) {
@@ -25,6 +26,21 @@ const Participate = props => {
       })
       return
     }
+    // 人满，提示为备胎
+    if (props.data.participants >= props.data.busGame.peopleNum) {
+      const result = await showModal({
+        confirmText: '参与',
+        content: `
+        活动已满，请确认是否进入候补队列。     \n
+        当有玩家退出且轮到您时，会自动通知您
+        `,
+      })
+      if (!result.confirm) return
+      const res = await requestSubscribeMessage(
+        process.env.templateActSpareTireInvolved,
+      )
+    }
+
     try {
       const res = await $api.ActivityApi.involvedOrExitActivities({
         userId: GlobalStore.userInfo.id,
@@ -130,7 +146,7 @@ const Participate = props => {
     if (
       !props.data.edit &&
       props.data.showInvolved &&
-      +props.data.participants < props.data.busGame.peopleNum &&
+      +props.data.participants < props.data.busGame.peopleNum + 4 &&
       !props.data.isInvolved
     ) {
       return (

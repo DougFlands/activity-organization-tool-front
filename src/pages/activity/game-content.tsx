@@ -45,7 +45,13 @@ const GameContent = props => {
           人数: {props.data.participants}/{props.data.busGame.peopleNum}
         </View>
       </View>
-      {<Participate data={props.data} handleClick={props.handleClick} />}
+      {
+        <Participate
+          data={props.data}
+          handleClick={props.handleClick}
+          handleReset={props.handleReset}
+        />
+      }
     </AtCard>
   )
 }

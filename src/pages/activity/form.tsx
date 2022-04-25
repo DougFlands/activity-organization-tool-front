@@ -81,7 +81,7 @@ const Form = () => {
       console.log(error)
       return
     }
-    await requestSubscribeMessage(process.env.templateID)
+    await requestSubscribeMessage(process.env.templateActReady)
     await navigateBack()
     show({
       title: '创建成功',
