@@ -34,27 +34,24 @@ const GameContent = props => {
           <View className={style.isInvolved}>已参加</View>
         ) : null}
 
-        <View>发起人: {props.data.user.nickName}</View>
+        <View>DM: {props.data.user.nickName}</View>
         <View>地点: {props.data.location || '线上'}</View>
         <View>
-          费用:
-          {props.data.price === '0' ? '免费' : `￥${props.data.price}`}
+          费用: {props.data.price === '0' ? '免费' : `￥${props.data.price}`}
         </View>
         <View>
           {props.data.dateTime === '2099-12-31 23:59:59' ? (
             '活动日期: 待定'
           ) : (
             <View>
-              <View>活动日期: {props.data.dateTime.slice(0, 10)}</View>
-              <View>
-                活动时间: {props.data.dateTime.slice(11, 16)} -
-                {props.data.endTime?.slice(11, 16)}
-              </View>
+              活动日期: {props.data.dateTime.slice(0, 10)}{' '}
+              {props.data.dateTime.slice(11, 16)} -{' '}
+              {props.data.endTime?.slice(11, 16)}
             </View>
           )}
         </View>
-        <View>游戏人数: {props.data.busGame.peopleNum}</View>
-        <View>参与人数:{props.data.participants}</View>
+        <View>游戏人数: {props.data.busGame.peopleNum}人</View>
+        <View>已参与: {props.data.participants}人</View>
       </View>
       {
         <Participate

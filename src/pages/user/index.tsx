@@ -94,6 +94,17 @@ const User = () => {
       </View>
 
       <AtList>
+        {GlobalStore.userInfo.isAdmin >= 2 ? (
+          <>
+            <AtListItem
+              title="用户列表"
+              arrow="right"
+              onClick={() => handleClick('userList')}
+              iconInfo={{ size: 16, color: '#6190e8', value: 'user' }}
+            />
+          </>
+        ) : null}
+
         {GlobalStore.userInfo.isAdmin >= 1 ? (
           <>
             <AtListItem
@@ -123,16 +134,6 @@ const User = () => {
           </>
         ) : null}
 
-        {GlobalStore.userInfo.isAdmin >= 2 ? (
-          <>
-            <AtListItem
-              title="用户列表"
-              arrow="right"
-              onClick={() => handleClick('userList')}
-              iconInfo={{ size: 16, color: '#6190e8', value: 'user' }}
-            />
-          </>
-        ) : null}
         <AtListItem
           title="增加活动备胎转正通知次数"
           arrow="right"
@@ -143,11 +144,13 @@ const User = () => {
           title={GlobalStore.userInfo.nickName ? '刷新用户信息' : '点击授权'}
           arrow="right"
           onClick={() => handleClick('authorize')}
+          iconInfo={{ size: 16, color: '#6190e8', value: 'reload' }}
         />
         <AtListItem
           title="关于本小程序"
           arrow="right"
           onClick={() => handleClick('about')}
+          iconInfo={{ size: 16, color: '#6190e8', value: 'alert-circle' }}
         />
       </AtList>
 
