@@ -21,8 +21,8 @@ const Form = () => {
   const [formData, setFormData] = useState({
     gameId: '',
     gameName: '',
-    ifOnline: true,
-    ifConfirmDate: true,
+    isOnline: true,
+    isConfirmDate: true,
     location: '',
     price: '',
     date: '',
@@ -54,15 +54,20 @@ const Form = () => {
       })
       return
     }
-    if (!formData.price) {
+    if (!formData.price || +formData.price === NaN) {
       show({
-        title: '请输入费用',
+        title: '请输入费用或费用格式不正确',
       })
       return
     }
+    formData.price = `${+formData.price}`
     formData.dateTime = `${formData.date} ${formData.time}:00`
-    if (!formData.ifConfirmDate) {
+    formData.endTime = `${formData.date} ${formData.endTime}:00`
+    if (!formData.isConfirmDate) {
       formData.dateTime = `2099-12-31 23:59:59`
+    }
+    if (formData.isOnline) {
+      formData.location = ''
     }
     if (new Date(formData.dateTime).getTime() < new Date().getTime()) {
       show({
@@ -95,103 +100,100 @@ const Form = () => {
   const startDate = () => new Date().toJSON().slice(0, 10)
 
   const renderLocation = () => {
-    if (!formData.ifOnline) {
-      return (
-        <View className={style.formItem}>
-          <AtInput
-            className={style.formRight2}
-            name="location"
-            type="text"
-            placeholder="请输入..."
-            value={formData.location}
-            onChange={value =>
-              setFormData({
-                ...formData,
-                location: `${value}`,
-              })
-            }
-          />
-        </View>
-      )
-    }
+    if (formData.isOnline) return
+    return (
+      <View className={style.formItem}>
+        <AtInput
+          className={style.formRight2}
+          name="location"
+          type="text"
+          placeholder="请输入游戏地点..."
+          value={formData.location}
+          onChange={value =>
+            setFormData({
+              ...formData,
+              location: `${value}`,
+            })
+          }
+        />
+      </View>
+    )
   }
   // 动态渲染日期
   const renderDate = () => {
-    if (formData.ifConfirmDate) {
-      return (
-        <View className={style.formItem}>
-          <View className={style.formLeft}>日期:</View>
-          <Picker
-            mode="date"
-            onChange={({ detail: { value } }) => {
-              setFormData({
-                ...formData,
-                date: `${value}`,
-              })
-            }}
-            value={formData.date}
-            start={startDate()}
-            className={style.picker}
-          >
-            {formData.date ? (
-              <View className={style.text}>{formData.date}</View>
-            ) : (
-              <View>请选择日期</View>
-            )}
-          </Picker>
-        </View>
-      )
-    }
+    if (!formData.isConfirmDate) return
+    return (
+      <View className={style.formItem}>
+        <View className={style.formLeft}>日期:</View>
+        <Picker
+          mode="date"
+          onChange={({ detail: { value } }) => {
+            setFormData({
+              ...formData,
+              date: `${value}`,
+            })
+          }}
+          value={formData.date}
+          start={startDate()}
+          className={style.picker}
+        >
+          {formData.date ? (
+            <View className={style.text}>{formData.date}</View>
+          ) : (
+            <View>请选择日期</View>
+          )}
+        </Picker>
+      </View>
+    )
   }
   // 动态渲染时间
   const renderTime = () => {
-    if (formData.ifConfirmDate) {
-      return (
+    if (!formData.isConfirmDate) return
+    return (
+      <View className={style.formItem}>
         <View className={style.formItem}>
-          <View className={style.formItem}>
-            <View className={style.formLeft}>开始时间:</View>
-            <Picker
-              mode="time"
-              onChange={({ detail: { value } }) => {
-                setFormData({
-                  ...formData,
-                  time: `${value}`,
-                })
-              }}
-              value={formData.time}
-              className={style.picker}
-            >
-              {formData.time ? (
-                <View className={style.text}>{formData.time}</View>
-              ) : (
-                <View>请选择时间</View>
-              )}
-            </Picker>
-          </View>
-
-          <View className={style.formItem}>
-            <View className={style.formLeft}>结束时间:</View>
-            <Picker
-              mode="time"
-              onChange={({ detail: { value } }) => {
-                setFormData({
-                  ...formData,
-                  endTime: `${value}`,
-                })
-              }}
-              value={formData.endTime}
-              className={style.picker}
-            >
-              {formData.endTime ? (
-                <View className={style.text}>{formData.endTime}</View>
-              ) : (
-                <View>请选择时间</View>
-              )}
-            </Picker>
-          </View>
+          <View className={style.formLeft}>开始时间:</View>
+          <Picker
+            mode="time"
+            onChange={({ detail: { value } }) => {
+              setFormData({
+                ...formData,
+                time: `${value}`,
+              })
+            }}
+            value={formData.time}
+            className={style.picker}
+          >
+            {formData.time ? (
+              <View className={style.text}>{formData.time}</View>
+            ) : (
+              <View>请选择时间</View>
+            )}
+          </Picker>
         </View>
-      )
-    }
+
+        <View className={style.formItem}>
+          <View className={style.formLeft}>结束时间:</View>
+          <Picker
+            mode="time"
+            onChange={({ detail: { value } }) => {
+              setFormData({
+                ...formData,
+                endTime: `${value}`,
+              })
+            }}
+            value={formData.endTime}
+            className={style.picker}
+          >
+            {formData.endTime ? (
+              <View className={style.text}>{formData.endTime}</View>
+            ) : (
+              <View>请选择时间</View>
+            )}
+          </Picker>
+        </View>
+      </View>
+    )
   }
   return (
     <View className={style.activityFormWrapper}>
@@ -224,11 +226,11 @@ const Form = () => {
               { label: '线上', value: true },
               { label: '线下', value: false },
             ]}
-            value={formData.ifOnline}
+            value={formData.isOnline}
             onClick={value =>
               setFormData({
                 ...formData,
-                ifOnline: value,
+                isOnline: value,
               })
             }
           />
@@ -246,7 +248,7 @@ const Form = () => {
             onChange={value =>
               setFormData({
                 ...formData,
-                price: `${+value ? value : formData.price}`,
+                price: `${value}`,
               })
             }
           />
@@ -260,11 +262,11 @@ const Form = () => {
               { label: '确定日期', value: true },
               { label: '时间待定', value: false },
             ]}
-            value={formData.ifConfirmDate}
+            value={formData.isConfirmDate}
             onClick={value =>
               setFormData({
                 ...formData,
-                ifConfirmDate: value,
+                isConfirmDate: value,
               })
             }
           />

@@ -19,10 +19,7 @@ const GameContent = props => {
     const time = new Date(props.data.deleteTime).getTime()
     return time > 0
   }
-  useEffect(() => {
-    console.log(props.data)
-    console.log(props.data.showInvolved)
-  }, [])
+  useEffect(() => {}, [])
   return (
     <AtCard
       title={`${props.data.busGame.type === 1 ? '剧本' : '桌游'}: ${
@@ -38,12 +35,26 @@ const GameContent = props => {
         ) : null}
 
         <View>发起人: {props.data.user.nickName}</View>
-        <View>地点: {props.data.location}</View>
-        <View>费用: ￥{props.data.price}</View>
-        <View>开始时间: {props.data.dateTime}</View>
+        <View>地点: {props.data.location || '线上'}</View>
         <View>
-          人数: {props.data.participants}/{props.data.busGame.peopleNum}
+          费用:
+          {props.data.price === '0' ? '免费' : `￥${props.data.price}`}
         </View>
+        <View>
+          {props.data.dateTime === '2099-12-31 23:59:59' ? (
+            '活动日期: 待定'
+          ) : (
+            <View>
+              <View>活动日期: {props.data.dateTime.slice(0, 10)}</View>
+              <View>
+                活动时间: {props.data.dateTime.slice(11, 16)} -
+                {props.data.endTime?.slice(11, 16)}
+              </View>
+            </View>
+          )}
+        </View>
+        <View>游戏人数: {props.data.busGame.peopleNum}</View>
+        <View>参与人数:{props.data.participants}</View>
       </View>
       {
         <Participate

@@ -121,9 +121,7 @@ const Participate = props => {
     const n = new Date().getTime()
     return n > d
   }
-  useEffect(() => {
-    console.log('参加', props.data.showInvolved)
-  }, [])
+  useEffect(() => {}, [])
 
   //   删除按钮
   const renderBtnDel = () => {
