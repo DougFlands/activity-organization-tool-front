@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text } from '@tarojs/components'
-import { AtCard, AtButton } from 'taro-ui'
+import { AtCard, AtDivider } from 'taro-ui'
 import { $api } from '@/api'
 import { useRouter } from 'taro-hooks'
 import { useStore } from '@/store'
@@ -28,13 +28,9 @@ const activityDetail = props => {
     price: '',
     participants: 0,
     dateTime: '',
-    endTime:'',
-    userList: [
-      // {
-      //   nickName: '',
-      //   isAdmin: 1,
-      // },
-    ],
+    endTime: '',
+    userList: [],
+    showInvolved: true,
   })
   const [routerInfo, { navigateBack }] = useRouter()
 
@@ -43,7 +39,10 @@ const activityDetail = props => {
       const res = await $api.ActivityApi.find({
         id: routerInfo.params.id,
       })
-      setActivity(res.busAct)
+      setActivity({
+        showInvolved: true,
+        ...res.busAct,
+      })
     } catch (error) {
       console.log(error)
       return
@@ -61,22 +60,51 @@ const activityDetail = props => {
       }`}
       className={style.activityGameContent}
     >
-      <View>发起人: {activity.user.nickName}</View>
-      <View>地点: {activity.location}</View>
-      <View>费用: ￥{activity.price}</View>
-      <View>开始时间: {activity.dateTime}</View>
-      <View>结束时间: {activity.endTime}</View>
+      <View>DM: {activity.user.nickName}</View>
+      <View>地点: {activity.location || '线上'}</View>
       <View>
-        人数: {activity.participants}/{activity.busGame.peopleNum}
+        费用: {activity.price === '0' ? '免费' : `￥${activity.price}`}
       </View>
+      {activity.dateTime === '2099-12-31 23:59:59' ? (
+        '活动日期: 待定'
+      ) : (
+        <View>
+          活动日期: {activity.dateTime.slice(0, 10)}{' '}
+          {activity.dateTime.slice(11, 16)} - {activity.endTime?.slice(11, 16)}
+        </View>
+      )}
+      <View>游戏人数: {activity.busGame.peopleNum}人</View>
+      <View>已参与: {activity.participants}人</View>
       <View>简介: {activity.busGame.introduction}</View>
       <View>
-        {activity.userList?.map((user: any) => {
-          return <View>玩家: {user.nickName}</View>
-        })}
-      </View>
-      <Participate data={activity}/>
+        {activity.userList ? (
+          <View>
+            <AtDivider
+              content="已参与玩家"
+              fontColor="#2d8cf0"
+              lineColor="#2d8cf0"
+            />
+            {activity.userList
+              .slice(0, activity.busGame.peopleNum - 1)
+              .map((user: any) => {
+                return <View>{user.nickName}</View>
+              })}
+          </View>
+        ) : null}
+        {activity.userList?.slice(activity.busGame.peopleNum - 1, 1000)
+          ?.length > 0 ? (
+          <View>
+            <AtDivider content="备胎" fontColor="#2d8cf0" lineColor="#2d8cf0" />
 
+            {activity.userList
+              ?.slice(activity.busGame.peopleNum - 1, 1000)
+              .map((user: any) => {
+                return <View>{user.nickName}</View>
+              })}
+          </View>
+        ) : null}
+      </View>
+      <Participate data={activity} handleClick={handleGetActivity} />
     </AtCard>
   )
 }

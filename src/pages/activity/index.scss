@@ -1,4 +1,6 @@
 @import '/src/app.scss';
+@import '~taro-ui/dist/style/components/divider.scss';
+@import '~taro-ui/dist/style/components/icon.scss';
 
 .activityWrapper {
   .pane {
@@ -54,7 +56,7 @@
     border: 1px solid #ff4949;
     background: #ff4949;
   }
-  view{
+  view {
     margin-bottom: 10px;
   }
 }
@@ -80,14 +82,14 @@
         margin: 0;
       }
     }
-    .formRight2{
+    .formRight2 {
       margin-left: 175px;
     }
-    .formRight3{
+    .formRight3 {
       display: flex;
       align-items: center;
       flex-direction: row;
-      :global{
+      :global {
         .at-radio__option {
           width: 210rpx;
         }
