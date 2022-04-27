@@ -40,7 +40,7 @@ const activityDetail = props => {
         id: routerInfo.params.id,
       })
       setActivity({
-        showInvolved: true,
+        showInvolved: !res.busAct.isInvolved,
         ...res.busAct,
       })
     } catch (error) {
