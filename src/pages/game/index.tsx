@@ -4,6 +4,7 @@ import { AtTabs, AtList, AtListItem, AtButton, AtPagination } from 'taro-ui'
 import { useRouter } from 'taro-hooks'
 import { useDidShow, useDidHide } from '@tarojs/taro'
 import { $api } from '@/api'
+import pageback from '@/hooks/pageback'
 
 import style from './index.scss'
 
@@ -13,7 +14,7 @@ const Game = () => {
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   // 判断是否从表单返回用
-  const [pageHide, setPageHide] = useState(false)
+  const [pageHide] = pageback(false)
 
   const [routerInfo, { navigateTo }] = useRouter()
 
@@ -46,19 +47,9 @@ const Game = () => {
   }
 
   useEffect(() => {
+    if (pageHide) return
     fetch()
-  }, [gameType, page])
-
-  useDidShow(() => {
-    if (pageHide) {
-      setPageHide(false)
-      fetch()
-    }
-  })
-
-  useDidHide(() => {
-    setPageHide(true)
-  })
+  }, [gameType, page, pageHide])
 
   return (
     <View className={style.gameWrapper}>

@@ -44,8 +44,8 @@ const GameContent = props => {
             '活动日期: 待定'
           ) : (
             <View>
-              活动日期: {props.data.dateTime.slice(0, 10)}{' '}
-              {props.data.dateTime.slice(11, 16)} -{' '}
+              活动日期: {props.data.dateTime?.slice(0, 10)}{' '}
+              {props.data.dateTime?.slice(11, 16)} -{' '}
               {props.data.endTime?.slice(11, 16)}
             </View>
           )}

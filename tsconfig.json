@@ -22,7 +22,9 @@
     "paths": {
       "@/pages/*": ["./src/pages/*"],
       "@/store/*": ["./src/store/*"],
-      "@/api/*": ["./src/api/*"]
+      "@/api/*": ["./src/api/*"],
+      "@/components/*": ["./src/components/*"],
+      "@/hooks/*": ["./src/hooks/*"]
     }
   },
   "exclude": ["node_modules", "dist"],

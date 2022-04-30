@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { View } from '@tarojs/components'
-import Taro from '@tarojs/taro'
+import Taro, { useDidShow, useDidHide } from '@tarojs/taro'
 import { AtTabs, AtTabsPane } from 'taro-ui'
 import CanParticipateList from './can-participate-list'
 import InvolvedList from './involved-list'
