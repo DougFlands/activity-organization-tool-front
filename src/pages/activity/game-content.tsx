@@ -11,13 +11,21 @@ const GameContent = props => {
   // 跳转详情
   const handleJumpDetail = () => {
     if (checkIsDel()) return
-    navigateTo(`/pages/activity/detail?id=${props.data.id}`)
+    navigateTo(
+      `/pages/activity/detail?id=${props.data.id}${
+        props.data.edit ? '&edit' : ''
+      }`,
+    )
   }
 
   // 检查是否已删除
   const checkIsDel = () => {
     const time = new Date(props.data.deleteTime).getTime()
     return time > 0
+  }
+
+  const timeSlice = (time: string, start: number, end: number) => {
+    return time ? time.slice(start, end) : time
   }
   useEffect(() => {}, [])
   return (
@@ -44,9 +52,9 @@ const GameContent = props => {
             '活动日期: 待定'
           ) : (
             <View>
-              活动日期: {props.data.dateTime?.slice(0, 10)}{' '}
-              {props.data.dateTime?.slice(11, 16)} -{' '}
-              {props.data.endTime?.slice(11, 16)}
+              活动日期: {timeSlice(props.data.dateTime, 0, 10)}{' '}
+              {timeSlice(props.data.dateTime, 11, 16)} -{' '}
+              {timeSlice(props.data.endTime, 11, 16)}
             </View>
           )}
         </View>

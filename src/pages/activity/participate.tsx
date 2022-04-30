@@ -99,7 +99,7 @@ const Participate = props => {
       }
 
       handleClick()
-      props.handleReset()
+      props.handleReset && props.handleReset()
       show({
         title: '删除成功',
       })
@@ -145,7 +145,8 @@ const Participate = props => {
       !props.data.edit &&
       props.data.showInvolved &&
       +props.data.participants < props.data.busGame.peopleNum + 4 &&
-      !props.data.isInvolved
+      !props.data.isInvolved &&
+      !checkDataTime()
     ) {
       return (
         <AtButton

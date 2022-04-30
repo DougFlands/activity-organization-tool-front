@@ -41,6 +41,7 @@ const activityDetail = props => {
       })
       setActivity({
         showInvolved: !res.busAct.isInvolved,
+        edit: routerInfo.params.edit,
         ...res.busAct,
       })
     } catch (error) {
@@ -69,8 +70,8 @@ const activityDetail = props => {
         '活动日期: 待定'
       ) : (
         <View>
-          活动日期: {activity.dateTime.slice(0, 10)}{' '}
-          {activity.dateTime.slice(11, 16)} - {activity.endTime?.slice(11, 16)}
+          活动日期: {activity.dateTime?.slice(0, 10)}{' '}
+          {activity.dateTime?.slice(11, 16)} - {activity.endTime?.slice(11, 16)}
         </View>
       )}
       <View>游戏人数: {activity.busGame.peopleNum}人</View>

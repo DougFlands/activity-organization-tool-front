@@ -16,6 +16,7 @@ const Game = props => {
   const [page, setPage] = useState(1)
 
   const handleClick = i => {
+    setPage(1)
     setGameType(i)
   }
 

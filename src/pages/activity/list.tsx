@@ -3,6 +3,7 @@ import { View } from '@tarojs/components'
 import { AtTabs, AtTabsPane, AtPagination } from 'taro-ui'
 import { $api } from '@/api'
 import { useStore } from '@/store'
+import pageback from '@/hooks/pageback'
 import GameContent from './game-content'
 import style from './index.scss'
 
@@ -16,6 +17,7 @@ const CanList = (props: ListProps) => {
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const { GlobalStore } = useStore()
+  const [pageHide] = pageback(false)
 
   const handlePageChange = data => {
     setPage(data.current)
@@ -40,8 +42,9 @@ const CanList = (props: ListProps) => {
   }
 
   useEffect(() => {
+    if (pageHide) return
     fetch()
-  }, [page])
+  }, [page, pageHide])
 
   return (
     <View className={style.activityListWrapper}>

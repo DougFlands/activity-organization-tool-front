@@ -62,6 +62,7 @@ const Form = () => {
     }
     formData.price = `${+formData.price}`
     formData.dateTime = `${formData.date} ${formData.time}:00`
+    const endTimeBackup = formData.endTime
     formData.endTime = `${formData.date} ${formData.endTime}:00`
     if (!formData.isConfirmDate) {
       formData.dateTime = `2099-12-31 23:59:59`
@@ -82,6 +83,7 @@ const Form = () => {
       } else {
         res = await $api.ActivityApi.create(formData)
       }
+      formData.endTime = endTimeBackup
     } catch (error) {
       console.log(error)
       return
