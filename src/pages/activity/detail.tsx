@@ -86,19 +86,19 @@ const activityDetail = props => {
               lineColor="#2d8cf0"
             />
             {activity.userList
-              .slice(0, activity.busGame.peopleNum - 1)
+              .slice(0, activity.busGame.peopleNum)
               .map((user: any) => {
                 return <View>{user.nickName}</View>
               })}
           </View>
         ) : null}
-        {activity.userList?.slice(activity.busGame.peopleNum - 1, 1000)
-          ?.length > 0 ? (
+        {activity.userList?.slice(activity.busGame.peopleNum, 1000)?.length >
+        0 ? (
           <View>
             <AtDivider content="备胎" fontColor="#2d8cf0" lineColor="#2d8cf0" />
 
             {activity.userList
-              ?.slice(activity.busGame.peopleNum - 1, 1000)
+              ?.slice(activity.busGame.peopleNum, 1000)
               .map((user: any) => {
                 return <View>{user.nickName}</View>
               })}
