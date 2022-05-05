@@ -66,6 +66,7 @@ const Form = () => {
     formData.endTime = `${formData.date} ${formData.endTime}:00`
     if (!formData.isConfirmDate) {
       formData.dateTime = `2099-12-31 23:59:59`
+      formData.endTime = `2099-12-31 23:59:59`
     }
     if (formData.isOnline) {
       formData.location = ''
