@@ -7,6 +7,8 @@ export default {
     'pages/activity/list',
     'pages/activity/detail',
     'pages/user/list',
+    'pages/user/ban-user-form',
+    'pages/user/ban-user-list',
     'pages/authorize',
   ],
   window: {

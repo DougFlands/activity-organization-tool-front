@@ -20,7 +20,7 @@ const Participate = props => {
   const [requestSubscribeMessage] = useRequestSubscribeMessage()
 
   const handleInvolvedActivity = async () => {
-    if (checkDataTime()) {
+    if (checkDataTimeIsExpired()) {
       show({
         title: '活动已过期',
       })
@@ -60,7 +60,7 @@ const Participate = props => {
   }
 
   const handleExisActivity = async () => {
-    if (checkDataTime()) {
+    if (checkDataTimeIsExpired()) {
       show({
         title: '活动已过期',
       })
@@ -115,8 +115,8 @@ const Participate = props => {
     const time = new Date(props.data.deleteTime).getTime()
     return time > 0
   }
-  // 检查活动时间是否过期
-  const checkDataTime = () => {
+  // 检查活动时间是否过期 过期返回true
+  const checkDataTimeIsExpired = () => {
     const d = new Date(props.data.dateTime).getTime()
     const n = new Date().getTime()
     return n > d
@@ -125,7 +125,7 @@ const Participate = props => {
 
   //   删除按钮
   const renderBtnDel = () => {
-    if (props.data.edit && !checkDataTime()) {
+    if (props.data.edit && !checkDataTimeIsExpired()) {
       return (
         <AtButton
           type="primary"
@@ -146,7 +146,7 @@ const Participate = props => {
       props.data.showInvolved &&
       +props.data.participants < props.data.busGame.peopleNum + 4 &&
       !props.data.isInvolved &&
-      !checkDataTime()
+      !checkDataTimeIsExpired()
     ) {
       return (
         <AtButton
@@ -165,7 +165,7 @@ const Participate = props => {
     if (
       !props.data.edit &&
       !props.data.showInvolved &&
-      !checkDataTime() &&
+      !checkDataTimeIsExpired() &&
       !checkIsDel()
     ) {
       return (

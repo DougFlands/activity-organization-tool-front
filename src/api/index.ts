@@ -67,7 +67,7 @@ function checkResponse(response: IApiData) {
     showToast({
       title: msg || '网络异常',
       icon: 'none',
-      duration: 1500,
+      duration: 2000,
     })
     return Promise.reject({ code, msg })
   }

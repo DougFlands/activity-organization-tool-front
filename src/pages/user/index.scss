@@ -6,6 +6,8 @@
 
 @import '~taro-ui/dist/style/components/avatar.scss';
 
+@import '~taro-ui/dist/style/components/float-layout.scss';
+
 .home {
   .header {
     display: flex;
@@ -34,11 +36,17 @@
   }
   .list {
     flex: 1;
+    .btnWrap {
+      display: flex;
+    }
     .listItem {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 10px 15px;
+      .authOperation {
+        margin-top: 10px;
+      }
       .id {
         min-width: 40px;
       }
@@ -50,6 +58,15 @@
         background-color: $color-warning;
         border-color: $color-warning;
       }
+      .dmBan {
+        background-color: $color-warning;
+        border-color: $color-warning;
+      }
+      .globleBan {
+        background-color: $color-error;
+        border-color: $color-error;
+        margin-left: 15px !important;
+      }
 
       :global {
         .at-button {
@@ -60,5 +77,45 @@
   }
   .pagination {
     margin-bottom: 10px;
+  }
+}
+
+.banUserFormWrapper {
+  padding: 10px 15px;
+  .text {
+    color: $color-error;
+  }
+  .formItem {
+    margin-top: 15px;
+  }
+  .submit {
+    margin-top: 15px;
+  }
+}
+
+.banUserListWrapper {
+  .pane {
+    height: calc(100vh - 80px - env(safe-area-inset-bottom));
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+.banUserItemWrapper {
+  display: flex;
+  flex-direction: column;
+  .banUserItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    width: calc(100% - 30px);
+    border-bottom: 1px solid $color-brand;
+    .btn {
+      background-color: $color-error;
+      border-color: $color-error;
+      width: fit-content;
+      padding: 0 20px;
+      margin: 0;
+    }
   }
 }

@@ -70,6 +70,9 @@ const User = () => {
       case 'userList':
         navigateTo('/pages/user/list')
         break
+      case 'banUserList':
+        navigateTo('/pages/user/ban-user-list')
+        break
       case 'about':
         setModalIsOpened(true)
         break
@@ -94,12 +97,18 @@ const User = () => {
       </View>
 
       <AtList>
-        {GlobalStore.userInfo.isAdmin >= 2 ? (
+        {GlobalStore.userInfo.isAdmin >= 1 ? (
           <>
             <AtListItem
               title="用户列表"
               arrow="right"
               onClick={() => handleClick('userList')}
+              iconInfo={{ size: 16, color: '#6190e8', value: 'user' }}
+            />
+            <AtListItem
+              title="黑名单列表"
+              arrow="right"
+              onClick={() => handleClick('banUserList')}
               iconInfo={{ size: 16, color: '#6190e8', value: 'user' }}
             />
           </>

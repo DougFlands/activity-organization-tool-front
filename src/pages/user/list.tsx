@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { View } from '@tarojs/components'
 import { AtInput, AtButton, AtPagination } from 'taro-ui'
-import { useToast, useModal } from 'taro-hooks'
+import { useToast, useModal, useRouter } from 'taro-hooks'
 import { $api } from '@/api'
+import { useStore } from '@/store'
 
 import style from './index.scss'
 
@@ -19,6 +20,8 @@ const UserList = () => {
     duration: 1500,
     icon: 'none',
   })
+  const { GlobalStore } = useStore()
+  const [routerInfo, { navigateTo }] = useRouter()
 
   const handlePageChange = data => {
     setPage(data.current)
@@ -59,6 +62,15 @@ const UserList = () => {
     }
   }
 
+  const addBanUser = async (item: any, globle: boolean = false) => {
+    console.log(item)
+    navigateTo(
+      `/pages/user/ban-user-form?${globle ? 'globle=true' : ''}&id=${
+        item.id
+      }&name=${item.nickName}`,
+    )
+  }
+
   useEffect(() => {
     fetch()
   }, [page])
@@ -85,26 +97,70 @@ const UserList = () => {
                 <text className={style.id}>{item.id}: </text>
                 <text>{item.nickName}</text>
               </View>
+              <View>
+                {GlobalStore.userInfo.isAdmin >= 1 ? (
+                  <View>
+                    {
+                      // item.isAdmin === 0 ? (
+                      <View className={style.btnWrap}>
+                        <AtButton
+                          type="primary"
+                          size="small"
+                          onClick={() => addBanUser(item)}
+                          className={style.dmBan}
+                        >
+                          个人拉黑
+                        </AtButton>
+                        {GlobalStore.userInfo.isAdmin >= 2 ? (
+                          <AtButton
+                            type="primary"
+                            size="small"
+                            onClick={() => addBanUser(item, true)}
+                            className={style.globleBan}
+                          >
+                            全局拉黑
+                          </AtButton>
+                        ) : null}
+                      </View>
 
-              {item.isAdmin === 0 ? (
-                <AtButton
-                  type="primary"
-                  size="small"
-                  onClick={() => setAuth(item)}
-                  className={style.up}
-                >
-                  提权
-                </AtButton>
-              ) : (
-                <AtButton
-                  type="primary"
-                  size="small"
-                  className={style.down}
-                  onClick={() => setAuth(item)}
-                >
-                  降权
-                </AtButton>
-              )}
+                      // ) : (
+                      // <AtButton
+                      //   type="primary"
+                      //   size="small"
+                      //   className={style.down}
+                      //   onClick={() => setAuth(item)}
+                      // >
+                      //   降权
+                      // </AtButton>
+                      // )
+                    }
+                  </View>
+                ) : null}
+
+                {GlobalStore.userInfo.isAdmin >= 2 ? (
+                  <View className={style.authOperation}>
+                    {item.isAdmin === 0 ? (
+                      <AtButton
+                        type="primary"
+                        size="small"
+                        onClick={() => setAuth(item)}
+                        className={style.up}
+                      >
+                        提权
+                      </AtButton>
+                    ) : (
+                      <AtButton
+                        type="primary"
+                        size="small"
+                        className={style.down}
+                        onClick={() => setAuth(item)}
+                      >
+                        降权
+                      </AtButton>
+                    )}
+                  </View>
+                ) : null}
+              </View>
             </View>
           )
         })}
