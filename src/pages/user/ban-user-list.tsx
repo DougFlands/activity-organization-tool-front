@@ -38,7 +38,7 @@ const BanUserList = () => {
       status: banUserListType + 1,
       dmId: banUserListType ? 0 : GlobalStore.userInfo.id,
     })
-    setList(res.list)
+    setList(res.list || [])
     setTotal(res.total)
   }
 
@@ -53,7 +53,7 @@ const BanUserList = () => {
 
   useEffect(() => {
     Taro.setNavigationBarTitle({
-      title: '黑名单 (点击玩家查看拉黑详情)',
+      title: '黑名单 (点击玩家查看拉黑原因)',
     })
     getList()
   }, [page, banUserListType])
@@ -88,7 +88,7 @@ const BanUserList = () => {
       <AtFloatLayout
         isOpened={floatLayoutStatus}
         onClose={() => setFloatLayoutStatus(false)}
-        title="拉黑详情"
+        title="拉黑原因"
       >
         {floatLayoutText}
       </AtFloatLayout>
@@ -110,7 +110,6 @@ const BanUserItem = props => {
 
   const { GlobalStore } = useStore()
   const handleSubmit = async (item: any) => {
-    console.log(item)
     const result = await showModal()
     if (!result.confirm) return
     try {
@@ -127,9 +126,7 @@ const BanUserItem = props => {
     })
     props.handleRefresh && props.handleRefresh()
   }
-  useEffect(() => {
-    console.log(props)
-  })
+  useEffect(() => {}, [props.data])
   return (
     <View className={style.banUserItemWrapper}>
       {props.data?.map(item => (
@@ -145,7 +142,10 @@ const BanUserItem = props => {
             <AtButton
               size="small"
               type="primary"
-              onClick={() => handleSubmit(item)}
+              onClick={e => {
+                e.stopPropagation()
+                handleSubmit(item)
+              }}
               className={style.btn}
             >
               解除拉黑
