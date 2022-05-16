@@ -13,7 +13,7 @@ type ListProps = {
 
 // 所有活动
 const CanList = (props: ListProps) => {
-  const [gameList, setGameList] = useState([])
+  const [activityList, setActivityList] = useState<IActivity[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   const [pageHide] = pageback(false)
@@ -30,8 +30,31 @@ const CanList = (props: ListProps) => {
     res.list?.forEach(item => {
       item.showInvolved = true
     })
-    setGameList(res.list || [])
+
+    setActivityList(activityListFilter(res.list || []))
+
     setTotal(res.total)
+  }
+
+  const activityListFilter = (list: IActivity[]) => {
+    // 已满
+    const fullList: IActivity[] = []
+    // 已参加
+    const involvedList: IActivity[] = []
+    // 进行中
+    const progressList: IActivity[] = []
+
+    list.forEach(item => {
+      // 已满
+      if (item.participants > item.busGame.peopleNum) {
+        fullList.push(item)
+      } else if (item.isInvolved) {
+        involvedList.push(item)
+      } else {
+        progressList.push(item)
+      }
+    })
+    return [...progressList, ...fullList, ...involvedList]
   }
 
   const handleClick = () => {
@@ -52,7 +75,7 @@ const CanList = (props: ListProps) => {
   return (
     <View className={style.activityCanListWrapper}>
       <View className={style.list}>
-        {gameList.map((item, index) => {
+        {activityList.map((item, index) => {
           return (
             <View key={index} className={style.content}>
               <GameContent data={item} handleClick={handleClick} />

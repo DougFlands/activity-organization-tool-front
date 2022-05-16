@@ -28,6 +28,7 @@ interface IActivity {
   endTime: string
   userList: TUser[]
   showInvolved: boolean
+  isInvolved: boolean
 }
 
 type TGame = {
