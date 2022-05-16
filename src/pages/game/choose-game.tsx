@@ -5,13 +5,9 @@ import { $api } from '@/api'
 
 import style from './index.scss'
 
-interface IProps {
-  handleChoose: (string) => void
-}
-
 const Game = props => {
   const [gameType, setGameType] = useState(0)
-  const [list, setList] = useState([])
+  const [list, setList] = useState<TGame[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
 
@@ -49,7 +45,7 @@ const Game = props => {
         className={style.tabs}
       ></AtTabs>
       <AtList className={style.list}>
-        {list.map((item: any) => {
+        {list.map(item => {
           return (
             <AtListItem
               title={item.name}

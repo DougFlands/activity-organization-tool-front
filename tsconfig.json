@@ -18,7 +18,7 @@
     "jsx": "react-jsx",
     "allowJs": true,
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types", "global.d.ts"],
+    "typeRoots": ["node_modules/@types", "global.d.ts", "src/typings"],
     "paths": {
       "@/pages/*": ["./src/pages/*"],
       "@/store/*": ["./src/store/*"],

@@ -7,23 +7,19 @@ import { useStore } from '@/store'
 import style from './index.scss'
 import Participate from './participate'
 
-type GameContentProps = {
-  data: any
-}
-
-const activityDetail = props => {
-  const [activity, setActivity] = useState({
+const activityDetail = () => {
+  const [activity, setActivity] = useState<IActivity>({
     busGame: {
       type: 0,
       name: '',
       introduction: '',
       peopleNum: 0,
     },
-    gameId: 1,
+    gameId: 0,
     user: {
       nickName: '',
     },
-    userId: 1,
+    userId: 0,
     location: '',
     price: '',
     participants: 0,
@@ -87,7 +83,7 @@ const activityDetail = props => {
             />
             {activity.userList
               .slice(0, activity.busGame.peopleNum)
-              .map((user: any) => {
+              .map((user: TUser) => {
                 return <View>{user.nickName}</View>
               })}
           </View>
@@ -99,7 +95,7 @@ const activityDetail = props => {
 
             {activity.userList
               ?.slice(activity.busGame.peopleNum, 1000)
-              .map((user: any) => {
+              .map((user: TUser) => {
                 return <View>{user.nickName}</View>
               })}
           </View>

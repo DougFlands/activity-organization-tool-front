@@ -18,7 +18,7 @@ const BanUserList = () => {
   const [banUserListType, setBanUserListType] = useState(0)
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
-  const [list, setList] = useState([])
+  const [list, setList] = useState<IBanUserItem[]>([])
   const [floatLayoutStatus, setFloatLayoutStatus] = useState(false)
   const [floatLayoutText, setFloatLayoutText] = useState('')
 
@@ -96,7 +96,14 @@ const BanUserList = () => {
   )
 }
 
-const BanUserItem = props => {
+interface IBanUserProps {
+  data: IBanUserItem[]
+  banUserListType: number
+  handleRefresh: () => void
+  handleClickPlayer: (text: string) => void
+}
+
+const BanUserItem = (props: IBanUserProps) => {
   const [showToast] = useToast({
     mask: true,
     duration: 1500,
@@ -109,7 +116,7 @@ const BanUserItem = props => {
   })
 
   const { GlobalStore } = useStore()
-  const handleSubmit = async (item: any) => {
+  const handleSubmit = async (item: IBanUserItem) => {
     const result = await showModal()
     if (!result.confirm) return
     try {

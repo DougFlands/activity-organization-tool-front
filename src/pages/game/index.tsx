@@ -10,7 +10,7 @@ import style from './index.scss'
 
 const Game = () => {
   const [gameType, setGameType] = useState(0)
-  const [list, setList] = useState([])
+  const [list, setList] = useState<TGame[]>([])
   const [total, setTotal] = useState(0)
   const [page, setPage] = useState(1)
   // 判断是否从表单返回用
@@ -60,14 +60,14 @@ const Game = () => {
         className={style.tabs}
       ></AtTabs>
       <AtList className={style.list}>
-        {list.map((item: any) => {
+        {list.map(item => {
           return (
             <AtListItem
               title={item.name}
               arrow="right"
               key={item.id}
               onClick={() => {
-                handleJumpDetail(item)
+                handleJumpDetail({ id: item.id + '' })
               }}
             />
           )

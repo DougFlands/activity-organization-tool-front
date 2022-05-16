@@ -62,8 +62,7 @@ const UserList = () => {
     }
   }
 
-  const addBanUser = async (item: any, globle: boolean = false) => {
-    console.log(item)
+  const addBanUser = async (item: TUser, globle: boolean = false) => {
     navigateTo(
       `/pages/user/ban-user-form?${globle ? 'globle=true' : ''}&id=${
         item.id
@@ -90,7 +89,7 @@ const UserList = () => {
         </AtButton>
       </AtInput>
       <View className={style.list}>
-        {list.map((item: any) => {
+        {list.map((item: TUser) => {
           return (
             <View key={item.id} className={style.listItem}>
               <View>
