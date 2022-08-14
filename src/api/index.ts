@@ -92,9 +92,11 @@ function request(url: string, options: TOptions) {
 
 export const httpService = {
   get(url: string, data?: any) {
+    console.log(url, { method: 'GET', data })
     return request(url, { method: 'GET', data })
   },
   post(url: string, data: any) {
+    console.log(url, { method: 'POST', data })
     return request(url, { method: 'POST', data })
   },
 }
