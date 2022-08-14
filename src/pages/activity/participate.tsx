@@ -6,6 +6,7 @@ import { $api } from '@/api'
 import { useToast, useModal, useRequestSubscribeMessage } from 'taro-hooks'
 import { useStore } from '@/store'
 import style from './index.scss'
+
 const Participate = props => {
   const [show] = useToast({
     mask: true,
@@ -123,7 +124,7 @@ const Participate = props => {
   }
   useEffect(() => {}, [])
 
-  //   删除按钮
+  // 删除按钮
   const renderBtnDel = () => {
     if (props.data.edit && !checkDataTimeIsExpired()) {
       return (
@@ -161,6 +162,7 @@ const Participate = props => {
     }
   }
 
+  // 退出按钮
   const renderBtnExit = () => {
     if (
       !props.data.edit &&

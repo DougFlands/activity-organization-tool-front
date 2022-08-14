@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from 'react'
 import { View, Text } from '@tarojs/components'
-import { AtCard, AtDivider } from 'taro-ui'
+import { AtCard, AtDivider, AtButton } from 'taro-ui'
 import { $api } from '@/api'
-import { useRouter } from 'taro-hooks'
+import { useRouter, useToast, useModal } from 'taro-hooks'
 import { useStore } from '@/store'
 import style from './index.scss'
 import Participate from './participate'
 
 const activityDetail = () => {
+  const { GlobalStore } = useStore()
+  const [showModal] = useModal({
+    title: '确认操作',
+  })
+  const [show] = useToast({
+    mask: true,
+    title: '踢出成功',
+    duration: 1500,
+    icon: 'none',
+  })
   const [activity, setActivity] = useState<IActivity>({
     busGame: {
       type: 0,
@@ -27,6 +37,7 @@ const activityDetail = () => {
     endTime: '',
     userList: [],
     showInvolved: true,
+    isInvolved: false,
   })
   const [routerInfo, { navigateBack }] = useRouter()
 
@@ -44,6 +55,51 @@ const activityDetail = () => {
       console.log(error)
       return
     }
+  }
+
+  const handlerKickUser = async user => {
+    console.log(user)
+    const result = await showModal({
+      confirmText: '踢出',
+      content: `踢出玩家: ${user.nickName}`,
+    })
+    try {
+      await $api.ActivityApi.involvedOrExitActivities({
+        userId: user.id,
+        activityId: activity.id,
+        status: 0,
+      })
+    } catch (error) {
+      console.log(error)
+      return
+    }
+    await handleGetActivity()
+    show()
+  }
+
+  // DM 踢出玩家
+  const renderKickBtn = user => {
+    if (GlobalStore.userInfo.id === activity.userId) {
+      return (
+        <AtButton
+          type="primary"
+          size="small"
+          className={`${style.btn} ${style.btnExit} ${style.btnKick}`}
+          onClick={() => handlerKickUser(user)}
+        >
+          踢出玩家
+        </AtButton>
+      )
+    }
+  }
+
+  const renderUser = user => {
+    return (
+      <View className={style.userItem}>
+        {user.nickName}
+        {renderKickBtn(user)}
+      </View>
+    )
   }
 
   useEffect(() => {
@@ -84,7 +140,7 @@ const activityDetail = () => {
             {activity.userList
               .slice(0, activity.busGame.peopleNum)
               .map((user: TUser) => {
-                return <View>{user.nickName}</View>
+                return renderUser(user)
               })}
           </View>
         ) : null}
@@ -96,7 +152,7 @@ const activityDetail = () => {
             {activity.userList
               ?.slice(activity.busGame.peopleNum, 1000)
               .map((user: TUser) => {
-                return <View>{user.nickName}</View>
+                return renderUser(user)
               })}
           </View>
         ) : null}

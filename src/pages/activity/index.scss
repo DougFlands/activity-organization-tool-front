@@ -56,8 +56,17 @@
     border: 1px solid #ff4949;
     background: #ff4949;
   }
+
   view {
     margin-bottom: 10px;
+  }
+  .userItem {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .btnKick {
+      margin: 0;
+    }
   }
 }
 

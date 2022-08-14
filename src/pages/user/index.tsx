@@ -8,7 +8,6 @@ import {
   AtTimeline,
   AtList,
   AtListItem,
-  AtAvatar,
 } from 'taro-ui'
 import { useRouter, useRequestSubscribeMessage, useToast } from 'taro-hooks'
 import { useStore } from '@/store'
@@ -85,9 +84,6 @@ const User = () => {
   return (
     <View className={style.home}>
       <View className={style.header}>
-        {GlobalStore.userInfo.nickName ? (
-          <AtAvatar image={GlobalStore.userInfo.avatarUrl}></AtAvatar>
-        ) : null}
         <View className={style.right}>
           <View className={`${style.info}`}>
             {GlobalStore.userInfo.nickName || '未登录'}

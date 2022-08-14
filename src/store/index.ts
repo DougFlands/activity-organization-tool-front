@@ -7,7 +7,6 @@ class Store {
   @observable userInfo = {
     id: '',
     openID: '',
-    avatarUrl: '',
     nickName: '',
     isAdmin: 0,
   }

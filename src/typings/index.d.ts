@@ -11,7 +11,6 @@ type TUser = {
   updatedTime?: string
   deleteTime?: string
   openID?: string
-  avatarUrl?: string
   nickName: string
   isAdmin?: number
 }
@@ -48,7 +47,6 @@ type TPlayer = {
   updatedTime: string
   deleteTime: string
   openID: string
-  avatarUrl: string
   nickName: string
   isAdmin: number
 }
@@ -59,7 +57,6 @@ type TDm = {
   updatedTime: string
   deleteTime: string
   openID: string
-  avatarUrl: string
   nickName: string
   isAdmin: number
 }
