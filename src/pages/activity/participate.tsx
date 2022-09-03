@@ -122,7 +122,6 @@ const Participate = props => {
     const n = new Date().getTime()
     return n > d
   }
-  useEffect(() => {}, [])
 
   // 删除按钮
   const renderBtnDel = () => {
@@ -183,8 +182,29 @@ const Participate = props => {
     }
   }
 
+  // 结束活动按钮
+  const renderBtnDone = () => {
+    if (props.showDone && props.data.endTime === '2099-12-31 23:59:59') {
+      return (
+        <View>
+          <AtButton
+            type="primary"
+            size="small"
+            className={`${style.btn}`}
+            onClick={() => {
+              props.handleDoneActivity && props.handleDoneActivity()
+            }}
+          >
+            结束活动
+          </AtButton>
+        </View>
+      )
+    }
+  }
+
   return (
     <View>
+      {renderBtnDone()}
       {renderBtnDel()}
       {renderBtnInvolved()}
       {renderBtnExit()}

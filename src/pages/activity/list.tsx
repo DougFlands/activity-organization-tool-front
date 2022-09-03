@@ -52,7 +52,11 @@ const CanList = (props: ListProps) => {
         {gameList.map((item, index) => {
           return (
             <View key={index} className={style.content}>
-              <GameContent data={item} handleReset={handleReset} />
+              <GameContent
+                data={item}
+                handleReset={handleReset}
+                showDone={true}
+              />
             </View>
           )
         })}
