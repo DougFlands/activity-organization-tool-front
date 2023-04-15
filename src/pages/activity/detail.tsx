@@ -19,6 +19,7 @@ const activityDetail = () => {
     icon: 'none',
   })
   const [activity, setActivity] = useState<IActivity>({
+    id: null,
     busGame: {
       type: 0,
       name: '',
@@ -29,6 +30,7 @@ const activityDetail = () => {
     user: {
       nickName: '',
     },
+    rminedDate: 0,
     userId: 0,
     location: '',
     price: '',
@@ -102,6 +104,19 @@ const activityDetail = () => {
     )
   }
 
+  const rminedDateFormat = (value: number) => {
+    switch (value) {
+      case 0:
+        return '不限制'
+      case 1:
+        return '工作日'
+      case 2:
+        return '周末'
+      default:
+        return ''
+    }
+  }
+
   useEffect(() => {
     handleGetActivity()
   }, [])
@@ -126,6 +141,14 @@ const activityDetail = () => {
           {activity.dateTime?.slice(11, 16)} - {activity.endTime?.slice(11, 16)}
         </View>
       )}
+
+      {
+        <View>
+          {activity.dateTime === '2099-12-31 23:59:59' &&
+            `待定限制: ${rminedDateFormat(activity.rminedDate)}`}
+        </View>
+      }
+
       <View>游戏人数: {activity.busGame.peopleNum}人</View>
       <View>已参与: {activity.participants}人</View>
       <View>简介: {activity.busGame.introduction}</View>

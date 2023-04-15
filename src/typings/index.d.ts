@@ -16,10 +16,12 @@ type TUser = {
 }
 
 interface IActivity {
+  id: number | null
   busGame: TBusGame
   gameId: number
   user: TUser
   userId: number
+  rminedDate: number
   location: string
   price: string
   participants: number

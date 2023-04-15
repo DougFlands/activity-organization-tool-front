@@ -66,6 +66,18 @@ const GameContent = props => {
 
   const startDate = () => new Date().toJSON().slice(0, 10)
 
+  const rminedDateFormat = (value: number) => {
+    switch (value) {
+      case 0:
+        return '不限制'
+      case 1:
+        return '工作日'
+      case 2:
+        return '周末'
+      default:
+        return ''
+    }
+  }
   useEffect(() => {}, [])
   return (
     <AtCard
@@ -97,6 +109,12 @@ const GameContent = props => {
             </View>
           )}
         </View>
+        {
+          <View>
+            {props.data.dateTime === '2099-12-31 23:59:59' &&
+              `待定限制: ${rminedDateFormat(props.data.rminedDate)}`}
+          </View>
+        }
         <View>游戏人数: {props.data.busGame.peopleNum}人</View>
         <View>已参与: {props.data.participants}人</View>
       </View>

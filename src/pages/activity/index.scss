@@ -104,12 +104,29 @@
         }
       }
     }
+    .formRight4 {
+      display: flex;
+      align-items: start;
+      flex-direction: row;
+      flex-direction: column;
+      :global {
+        .at-radio {
+          flex-direction: column;
+        }
+        .at-radio__option {
+          width: 210rpx;
+        }
+      }
+    }
     .game {
       color: #000;
       .text {
         color: rgb(190, 190, 190);
       }
     }
+  }
+  .formItem_start {
+    align-items: start;
   }
   .picker {
     flex: 1;

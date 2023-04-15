@@ -23,6 +23,7 @@ const Form = () => {
     gameName: '',
     isOnline: true,
     isConfirmDate: true,
+    rminedDate: 0, // 0 不限制 1 工作日 2 周末
     location: '',
     price: '',
     date: '',
@@ -54,7 +55,7 @@ const Form = () => {
       })
       return
     }
-    if (!formData.price || +formData.price === NaN) {
+    if (!formData.price || Number.isNaN(+formData.price)) {
       show({
         title: '请输入费用或费用格式不正确',
       })
@@ -198,6 +199,31 @@ const Form = () => {
       </View>
     )
   }
+
+  const renderDetermined = () => {
+    if (formData.isConfirmDate) return
+    return (
+      <View className={`${style.formItem} ${style.formItem_start}`}>
+        <View className={style.formLeft}>时间限制:</View>
+        <AtRadio
+          className={style.formRight4}
+          options={[
+            { label: '不限制', value: 0 },
+            { label: '工作日', value: 1 },
+            { label: '周末', value: 2 },
+          ]}
+          value={formData.rminedDate}
+          onClick={value =>
+            setFormData({
+              ...formData,
+              rminedDate: value,
+            })
+          }
+        />
+      </View>
+    )
+  }
+
   return (
     <View className={style.activityFormWrapper}>
       <AtForm>
@@ -278,6 +304,8 @@ const Form = () => {
         {renderDate()}
         {/* 动态渲染时间 */}
         {renderTime()}
+        {/* 待定限制 */}
+        {renderDetermined()}
         <AtButton type="primary" onClick={handleSubmit}>
           提交
         </AtButton>
